@@ -44,7 +44,7 @@ import de.boerde.blueparrot.satnet.laszlo.*;
 public class DirectoryOptionsPanel extends JPanel implements OptionsPanel, DocumentListener
 {
 	private JTextField dirField;
-	private JButton dirChooserButton;
+	//private JButton dirChooserButton;
 	private JFileChooser dirChooser;
 	private OptionsWindow window;
 
@@ -81,8 +81,8 @@ public class DirectoryOptionsPanel extends JPanel implements OptionsPanel, Docum
 		dirChooser.setApproveButtonText ("Set");
 		dirChooser.setApproveButtonMnemonic ('S');
 		dirChooser.setDialogTitle ("Laszlo work directory");
-		dirChooser.setDialogType (dirChooser.CUSTOM_DIALOG);
-		dirChooser.setFileSelectionMode (dirChooser.DIRECTORIES_ONLY);
+		dirChooser.setDialogType (JFileChooser.CUSTOM_DIALOG);
+		dirChooser.setFileSelectionMode (JFileChooser.DIRECTORIES_ONLY);
 		dirChooser.setSelectedFile (new File (workDirectory));
 		GridBagConstraints warningConstraints = new GridBagConstraints();
 		warningConstraints.anchor = GridBagConstraints.CENTER;
@@ -146,7 +146,7 @@ public class DirectoryOptionsPanel extends JPanel implements OptionsPanel, Docum
 			if (dir.exists() && dir.isDirectory())
 				dirChooser.setSelectedFile (dir);
 			int selection = dirChooser.showDialog (DirectoryOptionsPanel.this, "Set");
-			if (selection == dirChooser.APPROVE_OPTION)
+			if (selection == JFileChooser.APPROVE_OPTION)
 			{
 				dirField.setText (dirChooser.getSelectedFile().getAbsolutePath());
 			}

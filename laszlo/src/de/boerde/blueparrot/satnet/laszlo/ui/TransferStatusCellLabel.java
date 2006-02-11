@@ -30,7 +30,6 @@ Project home page: http://laszlo.berlios.de/
 package de.boerde.blueparrot.satnet.laszlo.ui;
 
 import java.awt.*;
-import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -60,7 +59,7 @@ public class TransferStatusCellLabel extends JLabel implements TableCellRenderer
 		{
 			ContentReader reader = (ContentReader) value;
 			Announcement announcement = reader.getAnnouncement();
-			String transferName = announcement.getFullName();
+			//String transferName = announcement.getFullName();
 			BookingAnnouncement pkginfo = reader.getXmlAnnouncement();
 			String text = null;
 			if (pkginfo != null)

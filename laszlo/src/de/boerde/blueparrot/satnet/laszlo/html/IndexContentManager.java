@@ -73,16 +73,16 @@ public class IndexContentManager implements Producer
 
 		int secondSlash = uri.indexOf ("/", 1);
 		String name;
-		String remain;
+		//String remain;
 		if (secondSlash > 1)
 		{
 			name = uri.substring (1,  secondSlash);
-			remain = uri.substring (secondSlash+1);
+			//remain = uri.substring (secondSlash+1);
 		}
 		else
 		{
 			name = uri.substring (1);
-			remain = "";
+			//remain = "";
 		}
 		Object item = urls.get (name);
 //System.out.println (uri + "=>" + name + "=>" + item);

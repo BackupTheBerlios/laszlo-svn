@@ -41,7 +41,7 @@ import javax.swing.*;
 public class NetworkInterfaceComboBox extends JComboBox
 {
 	private NetworkInterface[] interfaces;
-	private int selectedInterface;
+	//private int selectedInterface;
 	private String textFormat = "%d (%i)";
 	private String tooltipFormat = "";
 
@@ -51,10 +51,10 @@ public class NetworkInterfaceComboBox extends JComboBox
 		Vector temp = new Vector();
 		try
 		{
-			Enumeration enum = NetworkInterface.getNetworkInterfaces();
-			while (enum.hasMoreElements())
+			Enumeration ifEnum = NetworkInterface.getNetworkInterfaces();
+			while (ifEnum.hasMoreElements())
 			{
-				temp.add (enum.nextElement());
+				temp.add (ifEnum.nextElement());
 			}
 			interfaces = new NetworkInterface [temp.size()];
 		}

@@ -31,7 +31,6 @@ package de.boerde.blueparrot.satnet.laszlo.ui;
 
 import java.awt.*;
 import java.text.*;
-import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -56,7 +55,7 @@ public class TransferStatusCellBitSet extends LabeledForwardBitChunkListBar impl
 	{
 		bar = getBar();
 		label = getLabel();
-		bar.setBarOrientation (bar.HORIZONTAL);
+		bar.setBarOrientation (ForwardBitChunkListBar.HORIZONTAL);
 	}
 
 	public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
@@ -68,7 +67,7 @@ public class TransferStatusCellBitSet extends LabeledForwardBitChunkListBar impl
 		if (value instanceof ContentReader)
 		{
 			ContentReader reader = (ContentReader) value;
-			Announcement announcement = reader.getAnnouncement();
+			//Announcement announcement = reader.getAnnouncement();
 			int totalSize = reader.getTotalBytes();
 			int receivedSize = reader.getReceivedBytes();
 			int missingSize = totalSize - receivedSize;

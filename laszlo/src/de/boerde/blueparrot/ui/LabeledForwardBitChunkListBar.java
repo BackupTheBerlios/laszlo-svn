@@ -29,8 +29,6 @@ Project home page: http://laszlo.berlios.de/
 
 package de.boerde.blueparrot.ui;
 
-import java.awt.*;
-import java.util.*;
 import javax.swing.*;
 
 import de.boerde.blueparrot.util.*;
@@ -91,8 +89,8 @@ public class LabeledForwardBitChunkListBar extends JPanel
 	{
 		setLayout (new OverlayLayout (this));
 		label = new JLabel (text);
-		label.setHorizontalAlignment (label.CENTER);
-		label.setVerticalAlignment (label.CENTER);
+		label.setHorizontalAlignment (SwingConstants.CENTER);
+		label.setVerticalAlignment (SwingConstants.CENTER);
 		label.setAlignmentX (CENTER_ALIGNMENT);
 		label.setAlignmentY (CENTER_ALIGNMENT);
 		label.setOpaque (false);

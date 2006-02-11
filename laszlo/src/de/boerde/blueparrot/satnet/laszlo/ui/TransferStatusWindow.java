@@ -31,7 +31,6 @@ package de.boerde.blueparrot.satnet.laszlo.ui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
 import javax.swing.*;
 
 import de.boerde.blueparrot.satnet.laszlo.*;
@@ -56,8 +55,8 @@ public class TransferStatusWindow extends JFrame implements WindowListener
 		root.add (toolbar, BorderLayout.NORTH);
 		statusPane = new TransferStatusPane (recv);
 		JScrollPane scrollPane = new JScrollPane (statusPane);
-		scrollPane.setHorizontalScrollBarPolicy (scrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setVerticalScrollBarPolicy (scrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setHorizontalScrollBarPolicy (ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setVerticalScrollBarPolicy (ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		root.add (scrollPane, BorderLayout.CENTER);
 	}
 

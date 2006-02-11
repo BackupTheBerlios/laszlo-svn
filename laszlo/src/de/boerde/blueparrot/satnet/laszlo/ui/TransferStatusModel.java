@@ -29,7 +29,6 @@ Project home page: http://laszlo.berlios.de/
 
 package de.boerde.blueparrot.satnet.laszlo.ui;
 
-import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
@@ -47,12 +46,12 @@ public class TransferStatusModel extends AbstractTableModel implements Receiver.
 	final public static int PROGRESS = 1;
 
 	private Vector transferData;
-	private Receiver receiver;
+	//private Receiver receiver;
 
 	/** Creates a new instance of TransferStatusModel */
 	public TransferStatusModel (Receiver receiver, JTable table)
 	{
-		this.receiver = receiver;
+		//this.receiver = receiver;
 		Vector oldTransfers = ContentReader.getAllContentReaders();
 		transferData = new Vector (oldTransfers.size());
 		receiver.addNewTransmissionListener (this);

@@ -42,13 +42,13 @@ import de.boerde.blueparrot.satnet.laszlo.protocol.http.*;
 public class WebcastProviderCategoryListGenerator extends HtmlGenerator implements Producer
 {
 	private String name;
-	private String title;
+	//private String title;
 	private Hashtable categories;
 
 	public WebcastProviderCategoryListGenerator (String name, String title, Hashtable categories)
 	{
 		this.name = name;
-		this.title = title;
+		//this.title = title;
 		this.categories = categories;
 	}
 
@@ -69,10 +69,10 @@ public class WebcastProviderCategoryListGenerator extends HtmlGenerator implemen
 			}
 			synchronized (categories)
 			{
-				Enumeration enum = categories.keys();
-				while (enum.hasMoreElements())
+				Enumeration catEnum = categories.keys();
+				while (catEnum.hasMoreElements())
 				{
-					String category = (String) enum.nextElement();
+					String category = (String) catEnum.nextElement();
 					for (int s=0; s<wantedServices.length; s++)
 					{
 						if (categoryHasService (categories, category, wantedServices [s]))
@@ -118,7 +118,7 @@ public class WebcastProviderCategoryListGenerator extends HtmlGenerator implemen
 		return false;
 	}
 
-	private boolean categoryHasServiceOtherThan (Hashtable categories, String category, String service)
+/*	private boolean categoryHasServiceOtherThan (Hashtable categories, String category, String service)
 	{
 		Vector categorysPackages = (Vector) categories.get (category);
 		Iterator packages = categorysPackages.iterator();
@@ -132,6 +132,6 @@ public class WebcastProviderCategoryListGenerator extends HtmlGenerator implemen
 		}
 		return false;
 	}
-
+*/
 	private static String[] wantedServices = { "webcasting", "newscasting" };
 }

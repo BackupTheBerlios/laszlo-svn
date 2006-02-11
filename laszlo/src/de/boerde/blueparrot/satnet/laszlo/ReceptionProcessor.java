@@ -63,7 +63,7 @@ public class ReceptionProcessor implements Receiver.NewTransmissionListener, Con
 		reader.removeTransmissionListener (this);
 		String localFile = reader.getLocalFileName();
 		Announcement announcement = reader.getAnnouncement();
-		String transferName = announcement.getFullName();
+		//String transferName = announcement.getFullName();
 		BookingAnnouncement xmlAnnouncement = reader.getXmlAnnouncement();
 		if (localFile.endsWith ("webcasters.xml"))
 		{

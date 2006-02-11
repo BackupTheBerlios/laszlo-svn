@@ -31,7 +31,6 @@ package de.boerde.blueparrot.satnet.laszlo;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
 
 /**
  *
@@ -47,7 +46,7 @@ public class AnnouncementReader implements Settings.SettingsChangedListener
 	private boolean isInGroup;
 	private boolean settingsChanged;
 
-	final private String transmitCharset = "Windows-1252";
+	//final private String transmitCharset = "Windows-1252";
 
 	/** Creates a new instance of AnnounementReader */
 	public AnnouncementReader() throws IOException

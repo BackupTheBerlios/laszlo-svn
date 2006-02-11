@@ -36,7 +36,6 @@ import java.net.*;
 import java.util.*;
 
 import de.boerde.blueparrot.io.*;
-import de.boerde.blueparrot.satnet.laszlo.*;
 
 /**
  *

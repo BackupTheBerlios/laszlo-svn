@@ -57,19 +57,19 @@ public class JavaMemoryGauge extends JPanel
 	{
 		super (new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.fill = constraints.BOTH;
+		constraints.fill = GridBagConstraints.BOTH;
 		constraints.insets = new Insets (2, 2, 2, 2);
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 		JPanel innerPanel = new JPanel();
 		innerPanel.setLayout (new OverlayLayout (innerPanel));
 		label.setOpaque (false);
-		label.setAlignmentX (label.CENTER_ALIGNMENT);
-		label.setAlignmentY (label.CENTER_ALIGNMENT);
-		label.setHorizontalAlignment (label.CENTER);
-		label.setVerticalAlignment (label.CENTER);
-		diagram.setAlignmentX (diagram.CENTER_ALIGNMENT);
-		diagram.setAlignmentY (diagram.CENTER_ALIGNMENT);
+		label.setAlignmentX (Component.CENTER_ALIGNMENT);
+		label.setAlignmentY (Component.CENTER_ALIGNMENT);
+		label.setHorizontalAlignment (SwingConstants.CENTER);
+		label.setVerticalAlignment (SwingConstants.CENTER);
+		diagram.setAlignmentX (Component.CENTER_ALIGNMENT);
+		diagram.setAlignmentY (Component.CENTER_ALIGNMENT);
 		innerPanel.add (label);
 		innerPanel.add (diagram);
 		add (innerPanel, constraints);
@@ -117,7 +117,7 @@ public class JavaMemoryGauge extends JPanel
 			double bitLength = (double) (verticalOrientation ? height : width) / (double) maxMemory;
 			int inuseWidth = (int) (inuseMemory * bitLength);
 			int totalWidth = (int) (totalMemory * bitLength);
-			int freeWidth = (int) (freeMemory * bitLength);
+			//int freeWidth = (int) (freeMemory * bitLength);
 
 			if (verticalOrientation)
 			{

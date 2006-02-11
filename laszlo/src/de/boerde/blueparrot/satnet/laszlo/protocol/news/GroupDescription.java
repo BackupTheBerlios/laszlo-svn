@@ -30,10 +30,6 @@ Project home page: http://laszlo.berlios.de/
 package de.boerde.blueparrot.satnet.laszlo.protocol.news;
 
 import java.io.*;
-import java.util.*;
-
-import de.boerde.blueparrot.satnet.laszlo.*;
-import de.boerde.blueparrot.satnet.laszlo.protocol.*;
 
 /**
  *

@@ -30,7 +30,6 @@ Project home page: http://laszlo.berlios.de/
 package de.boerde.blueparrot.satnet.laszlo;
 
 import java.io.*;
-import java.net.*;
 import java.util.*;
 
 /**
@@ -71,13 +70,13 @@ public class Receiver extends Thread implements ContentReader.TransmissionListen
 			try
 			{
 				Announcement a = reader.getTransmission();
-				String multicast = a.getDetail ("multicast");
-				String timeout = a.getDetail ("timeout");
+				//String multicast = a.getDetail ("multicast");
+				//String timeout = a.getDetail ("timeout");
 				ReceptionFilter.Response shouldReceive = filter.shouldReceive (a);
 				if (shouldReceive.getResult())
 				{
 					System.out.println ("Starting: " + a.getFullName() +  " (" + a.getDetail ("tsize") + " bytes)");
-					String name = a.getPlainName();
+					//String name = a.getPlainName();
 					try
 					{
 						ReceiverContentReaderThread t = new ReceiverContentReaderThread (a);

@@ -40,7 +40,7 @@ import de.boerde.blueparrot.satnet.laszlo.*;
  */
 public class HTTPProxyServer extends Thread implements Settings.SettingsChangedListener
 {
-	private HttpAccessLogger accessLogger = HttpAccessLogger.getHttpAccessLogger();	// not really needed but to make sure that the class is loaded and initialized _here_
+	//private HttpAccessLogger accessLogger = HttpAccessLogger.getHttpAccessLogger();	// not really needed but to make sure that the class is loaded and initialized _here_
 	private InetAddress bindAddress;
 	private int port;
 	private int backlog;

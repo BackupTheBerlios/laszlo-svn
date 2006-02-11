@@ -159,14 +159,14 @@ public class AdvertisingGenerator extends HtmlGenerator implements Producer
 					if (n instanceof Element)
 						rich = XMLHelpers.getContentText ((Element) n);
 				}
-				String border = null;
-				elements = advInfo.getElementsByTagName ("BORDER");
-				for (int e=0; e<elements.getLength(); e++)
-				{
-					Node n = elements.item (e);
-					if (n instanceof Element)
-						border = XMLHelpers.getContentText ((Element) n);
-				}
+				//String border = null;
+				//elements = advInfo.getElementsByTagName ("BORDER");
+				//for (int e=0; e<elements.getLength(); e++)
+				//{
+				//	Node n = elements.item (e);
+				//	if (n instanceof Element)
+				//		border = XMLHelpers.getContentText ((Element) n);
+				//}
 				String scrollbar = null;
 				elements = advInfo.getElementsByTagName ("SCROLLBAR");
 				for (int e=0; e<elements.getLength(); e++)

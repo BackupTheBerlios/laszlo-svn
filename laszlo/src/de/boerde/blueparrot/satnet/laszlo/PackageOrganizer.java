@@ -85,7 +85,7 @@ public class PackageOrganizer
 			category = announcement.getOneValue ("CATEGORY");
 		}
 */
-		String service = announcement.getServiceName();
+		//String service = announcement.getServiceName();
 		Hashtable categories;
 		synchronized (webcasters)
 		{
@@ -110,7 +110,7 @@ public class PackageOrganizer
 				htmlManager.setPath (webName, new WebcastProviderCategoryPackageListGenerator (webName, category, webcaster, packages));
 			}
 		}
-		String url = announcement.getUrl();
+		//String url = announcement.getUrl();
 		long updated = announcement.getUpdatedTime();
 		synchronized (packages)
 		{
@@ -146,7 +146,7 @@ public class PackageOrganizer
 			category = announcement.getOneValue ("CATEGORY");
 		}
 */
-		String service = announcement.getServiceName();
+		//String service = announcement.getServiceName();
 		Hashtable categories;
 		synchronized (webcasters)
 		{

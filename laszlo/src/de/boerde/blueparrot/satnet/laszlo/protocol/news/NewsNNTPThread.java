@@ -704,7 +704,7 @@ public class NewsNNTPThread extends Thread
 			else
 				calendar = new GregorianCalendar();
 
-			int currentYear = calendar.get (calendar.YEAR);
+			int currentYear = calendar.get (Calendar.YEAR);
 			int currentSimpleYear = currentYear % 100;
 			int currentCentury = currentYear - currentSimpleYear;
 			int simpleYear = Integer.parseInt (args.substring (0, 2));
@@ -716,12 +716,12 @@ public class NewsNNTPThread extends Thread
 			else
 				year = currentCentury + simpleYear;
 
-			calendar.set (calendar.YEAR, year);
-			calendar.set (calendar.MONTH, Integer.parseInt (args.substring (2, 4)) -1);	// January is 0
-			calendar.set (calendar.DAY_OF_MONTH, Integer.parseInt (args.substring (4, 6)));
-			calendar.set (calendar.HOUR_OF_DAY, Integer.parseInt (args.substring (7, 9)));
-			calendar.set (calendar.MINUTE, Integer.parseInt (args.substring (9, 11)));
-			calendar.set (calendar.SECOND, Integer.parseInt (args.substring (11, 13)));
+			calendar.set (Calendar.YEAR, year);
+			calendar.set (Calendar.MONTH, Integer.parseInt (args.substring (2, 4)) -1);	// January is 0
+			calendar.set (Calendar.DAY_OF_MONTH, Integer.parseInt (args.substring (4, 6)));
+			calendar.set (Calendar.HOUR_OF_DAY, Integer.parseInt (args.substring (7, 9)));
+			calendar.set (Calendar.MINUTE, Integer.parseInt (args.substring (9, 11)));
+			calendar.set (Calendar.SECOND, Integer.parseInt (args.substring (11, 13)));
 			return calendar.getTimeInMillis();
 		}
 		catch (Exception e)

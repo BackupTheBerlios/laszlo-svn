@@ -31,7 +31,6 @@ package de.boerde.blueparrot.satnet.laszlo.html;
 
 import java.io.*;
 
-import de.boerde.blueparrot.satnet.laszlo.*;
 import de.boerde.blueparrot.satnet.laszlo.protocol.http.*;
 
 /**

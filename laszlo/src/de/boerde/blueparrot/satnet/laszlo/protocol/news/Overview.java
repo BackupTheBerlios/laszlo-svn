@@ -96,7 +96,7 @@ public class Overview implements Serializable
 				int numBytes;
 				{
 					byte[] data = new byte [4];
-					int num = msgAccess.read (data);
+					//int num = msgAccess.read (data);
 					numBytes = (((data[0] & 0xff) << 24) | ((data[1] & 0xff) << 16) | ((data[2] & 0xff) << 8) | (data[3] & 0xff));
 				}
 				String line = "";

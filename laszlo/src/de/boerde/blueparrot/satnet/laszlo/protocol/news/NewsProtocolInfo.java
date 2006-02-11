@@ -66,7 +66,7 @@ public class NewsProtocolInfo extends ProtocolInfo implements Serializable
 				byte[] data = new byte [4];
 				int num;
 				Vector positions = new Vector();
-				Vector ids = new Vector();
+				//Vector ids = new Vector();
 				int count = 0;
 				do
 				{

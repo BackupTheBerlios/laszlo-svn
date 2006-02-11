@@ -30,7 +30,6 @@ Project home page: http://laszlo.berlios.de/
 package de.boerde.blueparrot.satnet.laszlo.protocol.http;
 
 import java.io.*;
-import java.net.*;
 import java.util.*;
 
 import de.boerde.blueparrot.satnet.laszlo.*;
@@ -137,7 +136,7 @@ public class CacheContentManager implements ContentManager, PackageManager.Packa
 			return null;
 		}
 
-		Settings settings = Settings.getSettings();
+		//Settings settings = Settings.getSettings();
 		String hostName = getHostNamePart (uri).toLowerCase();
 		ContentManagerInfo result = new ContentManagerInfo();
 		String mimeTypeAccordingToEnding = MimeTypes.getMimeTypes().classifyEnding (uri);

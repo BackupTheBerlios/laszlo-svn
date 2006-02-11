@@ -75,10 +75,10 @@ public class WebcastProviderCategoryPackageListGenerator extends HtmlGenerator i
 		{
 			synchronized (packages)
 			{
-				Enumeration enum = packages.elements();
-				while (enum.hasMoreElements())
+				Enumeration packEnum = packages.elements();
+				while (packEnum.hasMoreElements())
 				{
-					PackageManager.PackageInfo info = (PackageManager.PackageInfo) enum.nextElement();
+					PackageManager.PackageInfo info = (PackageManager.PackageInfo) packEnum.nextElement();
 					BookingAnnouncement announcement = info.getXmlAnnouncement();
 					String url = announcement.getUrl();
 					String index = announcement.getIndexHtml();

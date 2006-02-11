@@ -31,9 +31,7 @@ package de.boerde.blueparrot.satnet.laszlo;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
 
-import de.boerde.blueparrot.text.*;
 import de.boerde.blueparrot.util.*;
 
 /**
@@ -47,7 +45,7 @@ public class ReceiverContentReader extends ContentReader implements Settings.Set
 	private int blksize;
 	private int timeout;
 	protected String workDir;
-	private static InetAddressFormat inetAddressFormat = new InetAddressFormat();
+	//private static InetAddressFormat inetAddressFormat = new InetAddressFormat();
 
 	public ReceiverContentReader (Announcement announcement) throws IOException, ProtocolException
 	{

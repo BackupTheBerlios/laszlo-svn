@@ -29,7 +29,6 @@ Project home page: http://laszlo.berlios.de/
 
 package de.boerde.blueparrot.satnet.laszlo.ui;
 
-import java.awt.*;
 import javax.swing.*;
 
 import de.boerde.blueparrot.ui.*;

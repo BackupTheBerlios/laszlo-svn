@@ -68,7 +68,7 @@ public class BookingAnnouncement implements Serializable
 			if ((child instanceof Element) && (child.getNodeType() == Node.ELEMENT_NODE))
 			{
 				Element childElement = (Element) child;
-				NodeList subchildren = xml.getChildNodes();
+				//NodeList subchildren = xml.getChildNodes();
 				boolean subchildrenAlreadyWentDown = false;
 //				for (int s=0; s<subchildren.getLength(); s++)
 				{
@@ -148,7 +148,7 @@ public class BookingAnnouncement implements Serializable
 
 		if (obj instanceof Vector)
 		{
-			String newRemain = remainingPath.substring (pos+1);
+			//String newRemain = remainingPath.substring (pos+1);
 			Vector vector = (Vector) obj;
 			for (int v=0; v<vector.size(); v++)
 			{

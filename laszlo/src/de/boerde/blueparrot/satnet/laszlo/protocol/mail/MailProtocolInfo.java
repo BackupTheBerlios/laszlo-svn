@@ -31,7 +31,6 @@ package de.boerde.blueparrot.satnet.laszlo.protocol.mail;
 
 import java.io.*;
 import java.util.*;
-import org.w3c.dom.*;
 
 import de.boerde.blueparrot.satnet.laszlo.*;
 import de.boerde.blueparrot.satnet.laszlo.protocol.*;

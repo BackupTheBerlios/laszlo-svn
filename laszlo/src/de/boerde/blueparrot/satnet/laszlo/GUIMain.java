@@ -29,10 +29,7 @@ Project home page: http://laszlo.berlios.de/
 
 package de.boerde.blueparrot.satnet.laszlo;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
-import javax.swing.*;
 
 import de.boerde.blueparrot.satnet.laszlo.protocol.http.*;
 import de.boerde.blueparrot.satnet.laszlo.protocol.news.*;
@@ -47,7 +44,7 @@ public class GUIMain
 	public static void main (String[] args) throws IOException
 	{
 		Receiver recv = new Receiver();
-		ReceptionProcessor processor = new ReceptionProcessor (recv);
+		//ReceptionProcessor processor = new ReceptionProcessor (recv);
 		TransferStatusWindow frame = new TransferStatusWindow (recv);
 		recv.start();
 		frame.pack();

@@ -53,7 +53,7 @@ public class ReceptionFilter
 		if (transferName.endsWith ("webcasters.xml"))
 			return new Response (true, "seems to be the webcasters definitions");
 
-		String fileId = announcement.getDetail ("fileid");
+		//String fileId = announcement.getDetail ("fileid");
 		BookingAnnouncement xmlAnnouncement = xmlAnnouncementManager.getXMLAnnouncement (transferName);
 		if (xmlAnnouncement == null)
 		{

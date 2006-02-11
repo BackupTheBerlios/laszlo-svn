@@ -34,7 +34,6 @@ import java.nio.channels.*;
 import java.net.*;
 import java.util.*;
 
-import de.boerde.blueparrot.satnet.laszlo.*;
 
 /**
  *
@@ -48,7 +47,7 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 	public DirectFetchingContentManager ()
 	{
 		openConnections = new Hashtable();
-		Thread timeoutThread = new Thread()
+/*		Thread timeoutThread = new Thread()
 			{
 				public void run()
 				{
@@ -65,7 +64,7 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 						e.printStackTrace (System.err);
 					}
 				}
-			};
+			};*/
 	}
 
 	protected ConnectionInfo getConnection (RequestInfo request) throws IOException
@@ -215,7 +214,7 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 		}
 	}
 
-	private void checkAllTimeouts()
+/*	private void checkAllTimeouts()
 	{
 		synchronized (openConnections)
 		{
@@ -247,7 +246,7 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 				}
 			}
 		}
-	}
+	}*/
 
 	protected class TimeoutConnectionInfo extends ConnectionInfo
 	{

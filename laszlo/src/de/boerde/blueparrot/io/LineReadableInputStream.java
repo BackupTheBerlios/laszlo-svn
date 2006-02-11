@@ -30,7 +30,6 @@ Project home page: http://laszlo.berlios.de/
 package de.boerde.blueparrot.io;
 
 import java.io.*;
-import java.util.*;
 
 /**
  *

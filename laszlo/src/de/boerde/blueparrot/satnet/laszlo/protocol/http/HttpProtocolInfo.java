@@ -46,8 +46,8 @@ public class HttpProtocolInfo extends ProtocolInfo implements Serializable
 
 	public HttpProtocolInfo (PackageManager.PackageInfo pkgInfo)
 	{
-		String lastIterationUrl = null;
-		String lastIterationIndexHtml = null;
+		//String lastIterationUrl = null;
+		//String lastIterationIndexHtml = null;
 		findIndex:
 		for (int iteration=0; ; iteration++)
 		{
@@ -57,8 +57,8 @@ public class HttpProtocolInfo extends ProtocolInfo implements Serializable
 			{
 				break findIndex;
 			}
-			lastIterationUrl = url;
-			lastIterationIndexHtml = indexHtml;
+			//lastIterationUrl = url;
+			//lastIterationIndexHtml = indexHtml;
 
 			FileFinder finder = new FileFinder (pkgInfo.getDir());
 			finder.setFileFilter (new FileFilter()
