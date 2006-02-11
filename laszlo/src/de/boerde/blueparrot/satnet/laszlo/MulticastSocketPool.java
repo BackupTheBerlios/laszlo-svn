@@ -284,7 +284,9 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 	public synchronized void checkSocket (Announcement announcement) throws IOException
 	{
 		String multicast = announcement.getDetail ("multicast");
-		SocketInfo socketInfo = (SocketInfo) multicastToSocketInfo.get (multicast);
+		SocketInfo socketInfo = null;
+		if(multicast != null)
+		    socketInfo = (SocketInfo)multicastToSocketInfo.get(multicast);
 		if (socketInfo != null)
 		{
 			if (socketInfo.getCurrentOwner() != null)
