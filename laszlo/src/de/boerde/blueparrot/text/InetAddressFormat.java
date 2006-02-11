@@ -151,4 +151,9 @@ public class InetAddressFormat extends Format
 	}
 
 	private static DecimalFormat ipPartFormat = new DecimalFormat ("##0");
+	
+    static {
+    		ipPartFormat.setParseIntegerOnly(true);
+    }
+	
 }
