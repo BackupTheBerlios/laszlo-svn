@@ -68,63 +68,72 @@ public class NewsNNTPThread extends Thread
 
 			while (shouldRun)
 			{
-				String line = inReader.readLine();
-				if (line == null)
+				if(connection.isClosed())
 				{
 					shouldRun = false;
 				}
 				else
 				{
-					line = line.trim();
-					int firstSpace = line.indexOf (" ");
-					String cmd;
-					String cmdargs;
-					if (firstSpace >= 0)
+					String line = inReader.readLine();	
+					if (line == null)
 					{
-						cmd = line.substring (0, firstSpace);
-						cmdargs = line.substring (firstSpace+1).trim();
+						shouldRun = false;
 					}
 					else
 					{
-						cmd = line;
-						cmdargs = "";
+						line = line.trim();
+						int firstSpace = line.indexOf (" ");
+						String cmd;
+						String cmdargs;
+						if (firstSpace >= 0)
+						{
+							cmd = line.substring (0, firstSpace);
+							cmdargs = line.substring (firstSpace+1).trim();
+						}
+						else
+						{
+							cmd = line;
+							cmdargs = "";
+						}
+						if ("ARTICLE".equalsIgnoreCase (cmd))
+							handleArticleCommand (cmd, cmdargs);
+						else if ("BODY".equalsIgnoreCase (cmd))
+							handleArticleCommand (cmd, cmdargs);
+						else if ("GROUP".equalsIgnoreCase (cmd))
+							handleGroupCommand (cmd, cmdargs);
+						else if ("HEAD".equalsIgnoreCase (cmd))
+							handleArticleCommand (cmd, cmdargs);
+						else if ("HELP".equalsIgnoreCase (cmd))
+							handleHelpCommand (cmd, cmdargs);
+						else if ("IHAVE".equalsIgnoreCase (cmd))
+							handleIHaveCommand (cmd, cmdargs);
+						else if ("LAST".equalsIgnoreCase (cmd))
+							handleLastCommand (cmd, cmdargs);
+						else if ("LIST".equalsIgnoreCase (cmd))
+							handleListCommand (cmd, cmdargs);
+						else if ("MODE".equalsIgnoreCase (cmd))
+							handleModeCommand (cmd, cmdargs);
+						else if ("NEWGROUPS".equalsIgnoreCase (cmd))
+							handleNewGroupsCommand (cmd, cmdargs);
+						else if ("NEWNEWS".equalsIgnoreCase (cmd))
+							handleNewNewsCommand (cmd, cmdargs);
+						else if ("NEXT".equalsIgnoreCase (cmd))
+							handleNextCommand (cmd, cmdargs);
+						else if ("POST".equalsIgnoreCase (cmd))
+							handlePostCommand (cmd, cmdargs);
+						else if ("QUIT".equalsIgnoreCase (cmd))
+							handleQuitCommand (cmd, cmdargs);
+						else if ("SLAVE".equalsIgnoreCase (cmd))
+							handleSlaveCommand (cmd, cmdargs);
+						else if ("STAT".equalsIgnoreCase (cmd))
+							handleArticleCommand (cmd, cmdargs);
+						else if ("XOVER".equalsIgnoreCase (cmd))
+							handleXOverCommand (cmd, cmdargs);
+						else
+							handleUnknownCommand (cmd, cmdargs);
 					}
-					if ("ARTICLE".equalsIgnoreCase (cmd))
-						handleArticleCommand (cmd, cmdargs);
-					else if ("BODY".equalsIgnoreCase (cmd))
-						handleArticleCommand (cmd, cmdargs);
-					else if ("GROUP".equalsIgnoreCase (cmd))
-						handleGroupCommand (cmd, cmdargs);
-					else if ("HEAD".equalsIgnoreCase (cmd))
-						handleArticleCommand (cmd, cmdargs);
-					else if ("HELP".equalsIgnoreCase (cmd))
-						handleHelpCommand (cmd, cmdargs);
-					else if ("IHAVE".equalsIgnoreCase (cmd))
-						handleIHaveCommand (cmd, cmdargs);
-					else if ("LAST".equalsIgnoreCase (cmd))
-						handleLastCommand (cmd, cmdargs);
-					else if ("LIST".equalsIgnoreCase (cmd))
-						handleListCommand (cmd, cmdargs);
-					else if ("MODE".equalsIgnoreCase (cmd))
-						handleModeCommand (cmd, cmdargs);
-					else if ("NEWGROUPS".equalsIgnoreCase (cmd))
-						handleNewGroupsCommand (cmd, cmdargs);
-					else if ("NEWNEWS".equalsIgnoreCase (cmd))
-						handleNewNewsCommand (cmd, cmdargs);
-					else if ("NEXT".equalsIgnoreCase (cmd))
-						handleNextCommand (cmd, cmdargs);
-					else if ("POST".equalsIgnoreCase (cmd))
-						handlePostCommand (cmd, cmdargs);
-					else if ("QUIT".equalsIgnoreCase (cmd))
-						handleQuitCommand (cmd, cmdargs);
-					else if ("SLAVE".equalsIgnoreCase (cmd))
-						handleSlaveCommand (cmd, cmdargs);
-					else if ("STAT".equalsIgnoreCase (cmd))
-						handleArticleCommand (cmd, cmdargs);
-					else if ("XOVER".equalsIgnoreCase (cmd))
-						handleXOverCommand (cmd, cmdargs);
-					else
-						handleUnknownCommand (cmd, cmdargs);
+					
+					
 				}
 			}
 		}
