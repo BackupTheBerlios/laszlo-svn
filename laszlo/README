@@ -1,0 +1,233 @@
+Laszlo
+------
+
+This is work-in-progress.
+
+This is an implementation of receiving Web, News and Mail data from a DVB
+satellite service, and making it available to clients.
+
+If Laszlo was an abbreviation, it might mean something like
+Lightweight Alternative Satellite Zone Leveraging Option
+
+
+
+Requires:
+- DVB card and software
+- Reception of a suitable service, e.g. Casablanca/Sat@Once
+- J2RE 1.4.2 - http://java.sun.com/
+- A tool to extract .cab files:
+  * http://www.microsoft.com/windows2000/techinfo/reskit/tools/existing/extract-o.asp
+  * http://www.kyz.uklinux.net/cabextract.php
+
+
+DVB Setup on Windows:
+- Run your DVB card's data application, and tune in a suitable service, e.g.
+  Casablanca/Sat@Once
+
+DVB Setup on Linux:
+- Root privileges are needed for loading kernel modules, running dvbnet,
+  ifconfig and configuring rp_filer. szap may work under a normal user
+  account.
+- You must already have the DVB driver kernel modules compiled and loaded into
+  the kernel or set up for being automatically loaded.
+- You also need to have the DVB driver utilities available.
+- Have a channels.conf describing a suitable service in $HOME/.szap, e.g.:
+  Casablanca:12603:h:0:22000:0:0:7255
+- Tune in the service by calling szap, and keep it running (important), e.g.:
+  > szap Casablanca
+- Use the dvbnet utility to make the service's PID appear as a network
+  interface, e.g.:
+  > dvbnet -p 0x300
+  This should create an additional network interface (check with ifconfig -a),
+  most usually called dvb0_0
+- Assign an IP address to the new network interface:
+  > ifconfig dvb0_0 10.11.12.13
+  Note that you might need to
+  > echo 0 >/proc/sys/net/ipv4/conf/dvb0_0/rp_filter
+  in case the service sends its data from a subnet to which the IP address that
+  you chose does not belong.
+
+
+
+Run Laszlo:
+
+Change into the directory where laszlo.jar resides. Do not unpack laszlo.jar.
+Use a normally privileged user to run Laszlo, not root.
+
+Execute
+
+> java -jar laszlo.jar
+
+On Windows you can also use
+
+> javaw -jar laszlo.jar
+
+to detach from the command window.
+
+
+
+Basic configuration:
+
+- Set "DVB Interface" to the DVB device on which you have tuned in the service
+- Make sure the "Work Directory" is an empty directory and is not shared with
+  any other data, because laszlo may rigorously delete any file under it.
+- Further settings can be added to the config file .lazlo/lazlo.properties under
+  the User's home directory. Some further possible settings and their defaults
+  are:
+   ExpireIncompleteFileAfterMinutes=720
+   ExpireIncompleteFileCheckIntervalMinutes=5
+   ExpirePackageAfterMinutes=20160 (two weeks)
+   ExpirePackageCheckIntervalMinutes=60
+   LaszloHttpPort=8080
+   LaszloHttpBindAddress=0.0.0.0
+   LaszloHttpClientTimeoutSeconds=30
+   LaszloNntpPort=1119
+   LaszloNntpBindAddress=0.0.0.0
+   LaszloNntpClientTimeoutSeconds=600
+   ReceiveUseMulticastPool=false
+   UnpackCommandline.rar="unrar" x -o+ -inul -ri1 -p- -- "%%PACKEDFILE%%" "%%DESTDIR%%"/
+   UnpackCommandline.cab="%ProgramFiles%\\Resource Kit\\extract.exe" /Y /E /L "%%DESTDIR" "%%PACKEDFILE"
+   UnpackCommandline.cab="cabextract" -q -d "%%DESTDIR%%" "%%PACKEDFILE"
+   HttpOwnPseudoName=laszlo_index
+   HttpProxyFetching=none|direct|upstreamProxy
+   UpstreamHttpProxyHost=
+   UpstreamHttpProxyPort=
+
+
+General usage:
+
+After having started up Laszlo keep an eye on the transfer window. Once a couple
+of transmissions have been completed, you can take actions to view them in
+client programs.
+
+
+Web Usage:
+
+Use a normal browser, e.g. Mozilla, Opera, Firefox or Internet Explorer.
+Change its HTTP proxy configuration to Laszlo's IP address and HTTP port
+(defaults to 8080).
+Start at http://laszlo_index/ or at http://<laszloHost>:<laszloPort>/
+
+Note: Do not configure Laszlo as an FTP or HTTPS/SSL proxy in your browser.
+      It will not work.
+
+
+News Usage:
+
+Use a normal newsreader, e.g. Mozilla, Opera, Thunderbird or tin.
+Point it to a new NNTP Server at Laszlo's IP address and NNTP port
+(defaults to 1119).
+Use the newsreader's subscribe function to select the newsgroups that you would
+like to read.
+
+
+What's already working:
+- Basic reception, extraction and categorizazion
+- Browsing through downloaded Web Contents with a browser
+- Reading newsgroups with an NTTP Newsreader
+- A basic index menu
+- Replacing transmissions with newer transmission packages
+- Expiry of incomplete transmissions, outdated and damanged packages
+- Access from other machines in the network (can be disabled by setting bind
+  addresses stricter)
+- HTTP 1.0 proxying for missing content (when following links that lead out of
+  what has been transmitted); can optionally use an existing upstream proxy
+- Advertising banners in the index menu (hey - I don't get any money out of
+  that, but after having been in short contact with CSP, it's those ads that
+  fund the transmission services, and so let's better have them displayed in
+  alternative reception tools, too, to help that those satellite serives can
+  financially survive)
+
+
+What's not yet implemented:
+- Voting (looks like this is a Javascript mess, and it seems the exact mechanism
+  for this is changed every once in a while. Maybe in the end it turns out to be
+  as easy as just needing an HTML file in which to include all the received
+  voting-stripts)
+- Mailinglist reading (would it require to implement an IMAP4-protocol server,
+  or couldn't one just make Mailinglists available through NNTP, too...?)
+- Feed an existing NNTP News server with news transmissions
+- Filter transmissions (planning to allow filtering not only on Webcaster but
+  also on category, and maybe even on URL regex)
+- More detailed information about complete transmissions in WebUI / Swing GUI,
+  including whether a new version of a package is currently being transferred
+- HTTP 1.1 proxying (currently only HTTP 1.0), or possibly adding support for
+  more "exotic" HTTP methods.
+- Much better error/message handling (should be suitable for both GUI and
+  text-only daemon-like operation)
+- Client access restrictions based on IP ranges
+- Feed an existing HTTP caching(!) proxy with the received Web content. (May
+  turn out difficult, or even not feasible.)
+- Integrated readers for Web / News, possibly Mailinglists (will probably only
+  ever be implemented if there should be no other open items at all)
+
+
+Testing is needed on:
+- Specific Web data and their content-types; checking whether content types are
+  usually guessed correctly, or whether changes need to be made
+- Receiving new News transmissions, checking whether the overlap is always
+  calculated correctly so that message numbers of old messages that are still
+  in the new transmission, do not change (and so that readers won't display
+  those messages as new)
+- Some strange incidents on which leading or trailing parts of a transmission
+  seem to be sent to the wrong port. Does not seem to be a bug in the reception
+  code itself, so it might be either a detail of the transmission protocol which
+  has not yet been analyzed correctly, or this might be a limitation of the DVB
+  bandwidth or driver. Interestingly when the Receiver's MulticastPool is
+  enabled on Linux, this type of errors occurs extremely often. On Linux without
+  MulticastPool or on Windows regardless of the MulticastPool usage, these
+  errors are quite moderate. But does that imply a driver issue...?
+- ...and of course testing on a whole load of different environments.
+
+
+
+Protocol analysis:
+
+All of Laszlo has been created by guessing the transmission protocol used on
+the satellite, by receiving a couple of network packets and manually finding out
+what information they contain and how those information need to be put together
+to turn the output into correct shape for making them available.
+
+No documentation and no specifications have been used in any way for
+implementing the transmission/reception protocol.
+
+
+Disclaimer:
+
+Laszlo is currently a work in progress. It may or may not be progressed further.
+Its basic functionality has been tested; several aspects, however, require
+further testing.
+The author of Laszlo cannot be made liable for the effects that any malfunction
+or incorrect usage of the program might have. Note that the author of Laszlo
+cannot possibly take any responsibility for content that is received through the
+program, as the content is not sent by him but by the respective satellite
+service provider.
+
+
+License:
+
+Laszlo is Free Software and released under the terms of Gnu GPL.
+See the file COPYING for details.
+
+
+Feedback:
+
+Send your thoughts, comments, experiences, recommendations about/with/for
+Laszlo to:
+  Holger Spielmann <holger@spielmann.boerde.de>
+
+Laszlo's home in the Web is currently
+  http://laszlo.berlios.de/
+
+
+Many Thanks go to:
+
+Roland Fulde <http://www.fuldix.westfalen.de/roland/>
+  - for the original creation of Laszlo in the first place
+    and for permission to release it under the terms of the Gnu GPL
+Markus Lauer <http://cip.uni-trier.de/lauer/>
+  - for his great http://cip.uni-trier.de/lauer/dvb-ip/ page and escpecially
+    for the description how to get hold of a tcpdump for the multicast stream
+    for the purpose of protocol guessing so that this thing could have started
+Vu Tien Khan <Vu.Tien.Khang@ses-astra.com>
+  - for clarifying that CSP/Astra encourage third-party developments
