@@ -95,7 +95,7 @@ public class HttpProtocolInfo extends ProtocolInfo implements Serializable
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 		}
 	}

@@ -182,7 +182,7 @@ public class CacheContentManager implements ContentManager, PackageManager.Packa
 						}
 						catch (IOException e)
 						{
-							e.printStackTrace (System.err);
+							GUIMain.logger.severe(e.getMessage());
 						}
 					}
 				}
@@ -268,10 +268,10 @@ public class CacheContentManager implements ContentManager, PackageManager.Packa
 					{
 						uriBuffer.setCharAt (i, File.separatorChar);
 					}
-					else
-					{
-//System.err.println ("###### URI with / in query string. UNIMPLEMENTED. Please check how to handle this: " + uri);
-					}
+					//else
+					//{
+						//GUIMain.logger.info("###### URI with / in query string. UNIMPLEMENTED. Please check how to handle this: " + uri);
+					//}
 					break;
 				}
 				case '\\':
@@ -282,7 +282,7 @@ public class CacheContentManager implements ContentManager, PackageManager.Packa
 					}
 					else
 					{
-System.err.println ("###### URI with \\. UNIMPLEMENTED. Please check how to handle this: " + uri);
+						GUIMain.logger.warning("###### URI with \\. UNIMPLEMENTED. Please check how to handle this: " + uri);
 						break;
 					}
 				}
@@ -322,12 +322,12 @@ System.err.println ("###### URI with \\. UNIMPLEMENTED. Please check how to hand
 
 		if ((1 << charsAmbiguous) > (iteration))
 		{
-//System.out.println ("#iter" + iteration + ": " + uriBuffer.toString());
+			//GUIMain.logger.info("#iter" + iteration + ": " + uriBuffer.toString());
 			return uriBuffer.toString();
 		}
 		else
 		{
-//System.out.println ("#iter" + iteration + " ambig " + charsAmbiguous + ": nullExit " + uriBuffer.toString());
+			//GUIMain.logger.info("#iter" + iteration + " ambig " + charsAmbiguous + ": nullExit " + uriBuffer.toString());
 			return null;
 		}
 	}

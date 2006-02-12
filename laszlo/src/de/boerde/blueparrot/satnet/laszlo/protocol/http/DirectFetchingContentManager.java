@@ -33,6 +33,7 @@ import java.io.*;
 import java.nio.channels.*;
 import java.net.*;
 import java.util.*;
+import de.boerde.blueparrot.satnet.laszlo.GUIMain;
 
 
 /**
@@ -47,7 +48,7 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 	public DirectFetchingContentManager ()
 	{
 		openConnections = new Hashtable();
-/*		Thread timeoutThread = new Thread()
+		Thread timeoutThread = new Thread()
 			{
 				public void run()
 				{
@@ -61,10 +62,10 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 					}
 					catch (InterruptedException e)
 					{
-						e.printStackTrace (System.err);
+						GUIMain.logger.severe(e.getMessage());
 					}
 				}
-			};*/
+			};
 	}
 
 	protected ConnectionInfo getConnection (RequestInfo request) throws IOException
@@ -201,7 +202,7 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 						}
 						catch (NumberFormatException e)
 						{
-							e.printStackTrace (System.err);
+							GUIMain.logger.severe(e.getMessage());
 						}
 					}
 				}
@@ -214,7 +215,7 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 		}
 	}
 
-/*	private void checkAllTimeouts()
+	private void checkAllTimeouts()
 	{
 		synchronized (openConnections)
 		{
@@ -235,7 +236,7 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 						}
 						catch (IOException e)
 						{
-							e.printStackTrace (System.err);
+							GUIMain.logger.severe(e.getMessage());
 						}
 						hostConnections.remove (c);
 					}
@@ -246,7 +247,7 @@ public class DirectFetchingContentManager extends AbstractFetchingContentManager
 				}
 			}
 		}
-	}*/
+	}
 
 	protected class TimeoutConnectionInfo extends ConnectionInfo
 	{

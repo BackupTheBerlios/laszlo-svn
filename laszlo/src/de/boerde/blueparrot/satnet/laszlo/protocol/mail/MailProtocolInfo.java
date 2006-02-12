@@ -85,11 +85,11 @@ public class MailProtocolInfo extends ProtocolInfo implements Serializable
 				{
 					msgPositions [i] = ((Long) positions.get (i)).longValue();
 				}
-System.out.println (msgFile.getName() + " has " + count + " messages.");
+				GUIMain.logger.info(msgFile.getName() + " has " + count + " messages.");
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 			finally
 			{
@@ -100,7 +100,7 @@ System.out.println (msgFile.getName() + " has " + count + " messages.");
 				}
 				catch (IOException e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 			}
 		}

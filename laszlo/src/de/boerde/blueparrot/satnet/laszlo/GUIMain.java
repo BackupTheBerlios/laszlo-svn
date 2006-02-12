@@ -42,7 +42,7 @@ import de.boerde.blueparrot.satnet.laszlo.ui.*;
  */
 public class GUIMain
 {
-	static Logger logger = Logger.getLogger("laszlo");
+	public static Logger logger = Logger.getLogger("laszlo");
 	
 	public static void main (String[] args) throws IOException
 	{

@@ -84,7 +84,7 @@ public class GroupDescription implements Serializable
 
 	public synchronized void setInfo (NewsProtocolInfo newNewsInfo)
 	{
-//System.out.println ("### before: first " + firstMessageNumber + " last " + lastMessageNumber);
+		//GUIMain.logger.info("### before: first " + firstMessageNumber + " last " + lastMessageNumber);
 		overview = new Overview (newNewsInfo);
 		overview.open();
 
@@ -116,7 +116,7 @@ public class GroupDescription implements Serializable
 		}
 		firstMessageNumber += shift;
 		lastMessageNumber = firstMessageNumber + newLastMessageNumber;
-//System.out.println ("### after: first " + firstMessageNumber + " last " + lastMessageNumber + " shift " + shift);
+		//GUIMain.logger.info("### after: first " + firstMessageNumber + " last " + lastMessageNumber + " shift " + shift);
 		newsInfo = newNewsInfo;
 		overview.setFirstNumber (firstMessageNumber);
 		lastMessageID = overview.getMessageID (lastMessageNumber);

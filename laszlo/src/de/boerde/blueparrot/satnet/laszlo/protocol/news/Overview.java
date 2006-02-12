@@ -32,6 +32,8 @@ package de.boerde.blueparrot.satnet.laszlo.protocol.news;
 import java.io.*;
 import java.util.*;
 
+import de.boerde.blueparrot.satnet.laszlo.GUIMain;
+
 /**
  *
  * @author  roland
@@ -131,7 +133,7 @@ public class Overview implements Serializable
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 			ok = false;
 		}
 		finally
@@ -142,7 +144,7 @@ public class Overview implements Serializable
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 			finally
 			{
@@ -154,7 +156,7 @@ public class Overview implements Serializable
 					}
 					catch (IOException e)
 					{
-						e.printStackTrace (System.err);
+						GUIMain.logger.severe(e.getMessage());
 					}
 				}
 			}
@@ -245,7 +247,7 @@ public class Overview implements Serializable
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 	}
 
@@ -279,7 +281,7 @@ public class Overview implements Serializable
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 			return "";
 		}
 	}
@@ -321,7 +323,7 @@ public class Overview implements Serializable
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 			return -1;
 		}
 	}

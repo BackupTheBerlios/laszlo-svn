@@ -33,6 +33,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import de.boerde.blueparrot.satnet.laszlo.GUIMain;
+
 /**
  *
  * @author  roland
@@ -82,7 +84,7 @@ public class ContentManagerInfo
 		}
 		catch (FileNotFoundException e)
 		{
-			System.out.println ("Error: Not found: " + file);
+			GUIMain.logger.severe("Error: Not found: " + file);
 		}
 	}
 
@@ -101,7 +103,7 @@ public class ContentManagerInfo
 		}
 		catch (IOException e)
 		{
-			System.out.println ("Error getting Resource: " + e.getLocalizedMessage());
+			GUIMain.logger.severe("Error getting Resource: " + e.getMessage());
 		}
 	}
 

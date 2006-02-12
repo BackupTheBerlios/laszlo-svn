@@ -177,7 +177,7 @@ public class ReceiverContentReader extends ContentReader implements Settings.Set
 											else
 											{   // XXX: possible to ignore overlap errors?
 												GUIMain.logger.warning(announcement.getFullName() + " Sequence " + sequence + " came after " + lastReceivedSequence + ", possible overlap with other transmission?");
-												break;
+												//break;
 											}
 										}
 										else

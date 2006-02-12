@@ -85,7 +85,7 @@ public class IndexContentManager implements Producer
 			//remain = "";
 		}
 		Object item = urls.get (name);
-//System.out.println (uri + "=>" + name + "=>" + item);
+		//GUIMain.logger.info(uri + "=>" + name + "=>" + item);
 		if (item instanceof Producer)
 			((Producer) item).doGet (request, response);
 	}

@@ -144,15 +144,15 @@ public class HTTPProxyThread extends Thread
 		}
 		catch (SocketTimeoutException e)
 		{
-//			System.err.println ("Notice: Timeout HTTP connection with " + connection.getInetAddress());
+			GUIMain.logger.info("Timeout HTTP connection with " + connection.getInetAddress());
 		}
 		catch (SocketException e)
 		{
-			System.err.println ("Warning: SocketException " + e.getLocalizedMessage() + " at " + requestInfo.getUri());
+			GUIMain.logger.warning("SocketException " + e.getMessage() + " at " + requestInfo.getUri());
 		}
 		catch (Throwable e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 		finally
 		{
@@ -165,7 +165,7 @@ public class HTTPProxyThread extends Thread
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 			finally
 			{
@@ -178,7 +178,7 @@ public class HTTPProxyThread extends Thread
 				}
 				catch (Exception e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 				finally
 				{
@@ -191,7 +191,7 @@ public class HTTPProxyThread extends Thread
 					}
 					catch (Exception e)
 					{
-						e.printStackTrace (System.err);
+						GUIMain.logger.severe(e.getMessage());
 					}
 				}
 			}

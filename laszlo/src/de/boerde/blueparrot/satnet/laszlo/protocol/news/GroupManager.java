@@ -62,7 +62,7 @@ public class GroupManager
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 			finally
 			{
@@ -74,7 +74,7 @@ public class GroupManager
 					}
 					catch (Exception e)
 					{
-						e.printStackTrace (System.err);
+						GUIMain.logger.severe(e.getMessage());
 					}
 				}
 			}
@@ -93,7 +93,7 @@ public class GroupManager
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 		finally
 		{
@@ -105,7 +105,7 @@ public class GroupManager
 				}
 				catch (Exception e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 			}
 		}

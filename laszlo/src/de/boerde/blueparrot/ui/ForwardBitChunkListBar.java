@@ -259,10 +259,10 @@ public class ForwardBitChunkListBar extends JComponent
 
 		frame.setVisible (true);
 
-System.out.println ("Start");
+		System.out.println ("Start");
 		for (int i=0; i<set.length; i++)
 		{
-System.out.println ("Bar " + i);
+			System.out.println ("Bar " + i);
 			int l=len[i];
 			for (int j=0; j<l; j++)
 			{
@@ -287,7 +287,7 @@ System.out.println ("Bar " + i);
 				}
 			}
 			bars[i].setCurrentBit (-1);
-System.out.println (set[i]);
+			System.out.println (set[i]);
 		}
 	}
 }

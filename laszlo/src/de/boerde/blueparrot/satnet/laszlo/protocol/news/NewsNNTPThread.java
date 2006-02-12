@@ -33,6 +33,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import de.boerde.blueparrot.satnet.laszlo.GUIMain;
+
 /**
  *
  * @author  roland
@@ -139,11 +141,11 @@ public class NewsNNTPThread extends Thread
 		}
 		catch (SocketTimeoutException e)
 		{
-			System.err.println ("Info: Timeout NNTP connection with " + connection.getInetAddress());
+			GUIMain.logger.info("Timeout NNTP connection with " + connection.getInetAddress());
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 		finally
 		{
@@ -156,7 +158,7 @@ public class NewsNNTPThread extends Thread
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 			finally
 			{
@@ -169,7 +171,7 @@ public class NewsNNTPThread extends Thread
 				}
 				catch (Exception e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 				finally
 				{
@@ -182,7 +184,7 @@ public class NewsNNTPThread extends Thread
 					}
 					catch (Exception e)
 					{
-						e.printStackTrace (System.err);
+						GUIMain.logger.severe(e.getMessage());
 					}
 					finally
 					{
@@ -195,7 +197,7 @@ public class NewsNNTPThread extends Thread
 						}
 						catch (Exception e)
 						{
-							e.printStackTrace (System.err);
+							GUIMain.logger.severe(e.getMessage());
 						}
 						finally
 						{
@@ -334,7 +336,7 @@ public class NewsNNTPThread extends Thread
 					}
 					catch (IOException e)
 					{
-						e.printStackTrace (System.err);
+						GUIMain.logger.severe(e.getMessage());
 					}
 				}
 				if (oldOverview != null)
@@ -344,7 +346,7 @@ public class NewsNNTPThread extends Thread
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 				writeln ("411 requested group does not exist");
 			}
 		}
@@ -679,7 +681,7 @@ public class NewsNNTPThread extends Thread
 				}
 				catch (IOException e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 				finally
 				{
@@ -690,7 +692,7 @@ public class NewsNNTPThread extends Thread
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 	}
 

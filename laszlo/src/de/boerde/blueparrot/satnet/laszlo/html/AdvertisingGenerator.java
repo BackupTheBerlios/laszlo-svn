@@ -61,7 +61,7 @@ public class AdvertisingGenerator extends HtmlGenerator implements Producer
 		}
 		catch (ParserConfigurationException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 	}
 

@@ -126,7 +126,7 @@ public class HttpAccessLogger
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}		
 	}
 

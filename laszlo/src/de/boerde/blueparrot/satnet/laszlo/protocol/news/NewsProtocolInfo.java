@@ -87,7 +87,7 @@ public class NewsProtocolInfo extends ProtocolInfo implements Serializable
 				{
 					msgPositions [i] = ((Long) positions.get (i)).longValue();
 				}
-System.out.println (newsgroup + " has " + count + " messages.");
+				GUIMain.logger.info(newsgroup + " has " + count + " messages.");
 
 				GroupManager groupManager = GroupManager.getGroupManager();
 				GroupDescription group = groupManager.getGroup (newsgroup);
@@ -103,7 +103,7 @@ System.out.println (newsgroup + " has " + count + " messages.");
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 			finally
 			{
@@ -114,7 +114,7 @@ System.out.println (newsgroup + " has " + count + " messages.");
 				}
 				catch (IOException e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 			}
 		}
