@@ -82,7 +82,7 @@ public class ProviderNames
 				}
 				catch (IOException e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 			}
 		}
@@ -153,15 +153,15 @@ public class ProviderNames
 		}
 		catch (ParserConfigurationException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 		catch (SAXException e)
 		{
-			System.err.println ("Update Provider Names parse error on " + localFileName + ": " + e.getMessage());
+			GUIMain.logger.severe("Update Provider Names parse error on " + localFileName + ": " + e.getMessage());
 		}
 		catch (IOException e)
 		{
-			System.err.println ("Update Provider Names I/O error on " + localFileName + ": " + e.getMessage());
+			GUIMain.logger.severe("Update Provider Names I/O error on " + localFileName + ": " + e.getMessage());
 		}
 	}
 
@@ -184,7 +184,7 @@ public class ProviderNames
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 		finally
 		{

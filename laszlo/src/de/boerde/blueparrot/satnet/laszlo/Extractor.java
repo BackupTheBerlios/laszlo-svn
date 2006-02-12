@@ -126,17 +126,17 @@ System.out.println();
 						success = true;
 					}
 				}
-System.out.println (localFile + " ###LastLine--> " + lastLine);
+				System.out.println (localFile + " ###LastLine--> " + lastLine);
 			}
 */
 			process.waitFor();
 			File sourceFile = new File (localFile);
 			sourceFile.delete();
-//System.out.println (localFile + " ###exitValue " + process.exitValue());
+			//System.out.println (localFile + " ###exitValue " + process.exitValue());
 			success = (process.exitValue() == 0);
 			if (!success)
 			{
-System.err.println ("Error while unpacking " + localFile);
+				GUIMain.logger.warning("Error while unpacking " + localFile);
 				// Remove destination dir in case of error
 				Stack filesToDelete = new Stack();
 				Stack dirsToProcess = new Stack();
@@ -173,7 +173,7 @@ System.err.println ("Error while unpacking " + localFile);
 		}
 		catch (InterruptedException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 		return success;
 	}

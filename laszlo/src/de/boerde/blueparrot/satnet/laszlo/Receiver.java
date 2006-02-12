@@ -75,7 +75,7 @@ public class Receiver extends Thread implements ContentReader.TransmissionListen
 				ReceptionFilter.Response shouldReceive = filter.shouldReceive (a);
 				if (shouldReceive.getResult())
 				{
-					System.out.println ("Starting: " + a.getFullName() +  " (" + a.getDetail ("tsize") + " bytes)");
+					GUIMain.logger.info("Starting: " + a.getFullName() +  " (" + a.getDetail ("tsize") + " bytes)");
 					//String name = a.getPlainName();
 					try
 					{
@@ -90,18 +90,17 @@ public class Receiver extends Thread implements ContentReader.TransmissionListen
 					{
 						if (running)
 						{
-							System.err.println ("Error in : " + a);
-							e.printStackTrace (System.err);
+							GUIMain.logger.severe("Error in : " + a + ": " + e.getMessage());
 						}
 					}
 					catch (ProtocolException e)
 					{
-						e.printStackTrace (System.err);
+						GUIMain.logger.severe(e.getMessage());
 					}
 				}
 				else
 				{
-					System.out.println ("Skipping: " + a.getFullName() +  " (" + a.getDetail ("tsize") + " bytes) " + shouldReceive.getReason());
+					GUIMain.logger.warning("Skipping: " + a.getFullName() +  " (" + a.getDetail ("tsize") + " bytes) " + shouldReceive.getReason());
 					multicastSocketPool.checkSocket (a);
 				}
 				multicastSocketPool.checkTimeouts();
@@ -109,7 +108,7 @@ public class Receiver extends Thread implements ContentReader.TransmissionListen
 			catch (IOException e)
 			{
 				if (running)
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 			}
 		}
 		try
@@ -241,7 +240,7 @@ public class Receiver extends Thread implements ContentReader.TransmissionListen
 				}
 				shutdownTries--;
 			}
-			System.out.println ("hook: finish");
+			GUIMain.logger.info("hook: finish");
 		}
 	}
 }

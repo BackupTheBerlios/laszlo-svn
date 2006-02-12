@@ -30,6 +30,7 @@ Project home page: http://laszlo.berlios.de/
 package de.boerde.blueparrot.satnet.laszlo;
 
 import java.io.*;
+import java.util.logging.*;
 
 import de.boerde.blueparrot.satnet.laszlo.protocol.http.*;
 import de.boerde.blueparrot.satnet.laszlo.protocol.news.*;
@@ -41,6 +42,8 @@ import de.boerde.blueparrot.satnet.laszlo.ui.*;
  */
 public class GUIMain
 {
+	static Logger logger = Logger.getLogger("laszlo");
+	
 	public static void main (String[] args) throws IOException
 	{
 		Receiver recv = new Receiver();

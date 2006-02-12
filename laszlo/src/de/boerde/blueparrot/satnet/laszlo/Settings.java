@@ -113,7 +113,7 @@ public class Settings extends Properties
 			}
 			catch (SocketException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 		}
 		return dvbInterface;
@@ -789,7 +789,7 @@ public class Settings extends Properties
 			}
 			catch (IOException e)
 			{
-				System.out.println ("Error: Laszlo settings could not be loaded: " + e.getLocalizedMessage());
+				GUIMain.logger.severe("Laszlo settings could not be loaded: " + e.getMessage());
 			}
 		}
 	}

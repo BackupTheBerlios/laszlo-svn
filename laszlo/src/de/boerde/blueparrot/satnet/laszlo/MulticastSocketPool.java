@@ -70,7 +70,7 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 				String unknownstr = tok.nextToken();
 				if (!"1".equals (unknownstr))
 				{
-					System.err.println ("Warning, third parameter of multicast is not '1': " + announcement);
+					GUIMain.logger.warning("third parameter of multicast is not '1': " + announcement);
 				}
 			}
 			catch (Exception e)
@@ -131,7 +131,7 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 		{
 			if (!isJoined)
 			{
-//System.out.println ("--- joining " + multicast);
+				//GUIMain.logger.info("--- joining " + multicast);
 				socket.joinGroup (multicastAddress);
 				isJoined = true;
 			}
@@ -157,7 +157,7 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 				}
 				catch (IOException e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 			}
 		}
@@ -171,12 +171,12 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 
 			if (currentOwner != null)
 			{
-				System.err.println ("Warning: multicast socket " + currentOwner.getDetail ("multicast") + " is physically closed but seems to be still in use by " + currentOwner.getFullName());
+				GUIMain.logger.warning("multicast socket " + currentOwner.getDetail ("multicast") + " is physically closed but seems to be still in use by " + currentOwner.getFullName());
 			}
 
 			if (isJoined)
 			{
-//System.out.println ("--- leaving " + multicast);
+				//GUIMain.logger.info("--- leaving " + multicast);
 				socket.leaveGroup (multicastAddress);
 				isJoined = false;
 			}
@@ -214,7 +214,7 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 							}
 							catch (IOException e)
 							{
-								e.printStackTrace (System.err);
+								GUIMain.logger.severe(e.getMessage());
 							}
 							multicastToSocketInfo.remove (multicast);
 						}
@@ -268,7 +268,7 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 				if (socketInfo.getCurrentOwner() != null)
 				{
 					socketInfo.getSocket().setSoTimeout (1);	// in case someone's still trying to read, better time out soon...
-					System.err.println ("Warning: Socket " + multicast + " ist retrieved but still in use by " + announcement.getFullName());
+					GUIMain.logger.warning("Socket " + multicast + " ist retrieved but still in use by " + announcement.getFullName());
 				}
 				socketInfo.setTimingOut (-1);	// Don't bother as long as the ContentReader is active on the socket
 			}
@@ -292,7 +292,7 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 			if (socketInfo.getCurrentOwner() != null)
 			{
 				socketInfo.getSocket().setSoTimeout (1);	// in case someone's still trying to read, better time out soon...
-				System.err.println ("Warning: Socket " + multicast + " is checked but still in use by " + announcement.getFullName());
+				GUIMain.logger.warning("Socket " + multicast + " is checked but still in use by " + announcement.getFullName());
 			}
 			long timeoutTime = 0;
 			try
@@ -309,7 +309,7 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 			socketInfo.addTimingOut (timeoutTime);
 		}
@@ -336,7 +336,7 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 		}
 		multicastToSocketInfo.clear();

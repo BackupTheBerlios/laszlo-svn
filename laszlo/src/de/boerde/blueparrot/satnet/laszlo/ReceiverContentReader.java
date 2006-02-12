@@ -70,7 +70,7 @@ public class ReceiverContentReader extends ContentReader implements Settings.Set
 		socket.setReceiveBufferSize (settings.getSocketReceiveBufferSize());
 		if ((timeout <= 0) || (timeout > 7200))
 		{
-			System.err.println ("Warning: unreasonable SoTimeout, using deault instead for " + announcement);
+			GUIMain.logger.warning("unreasonable SoTimeout, using deault instead for " + announcement);
 			timeout = 120;
 		}
 		socket.setSoTimeout (timeout * 1000);	// Java uses milliseconds, what is the timeout value from the announcement?
@@ -175,45 +175,45 @@ public class ReceiverContentReader extends ContentReader implements Settings.Set
 													break;
 											}
 											else
-											{
-												System.err.println ("Error: " + announcement.getFullName() + " Sequence " + sequence + " came after " + lastReceivedSequence + ", possible overlap with other transmission?");
+											{   // XXX: possible to ignore overlap errors?
+												GUIMain.logger.warning(announcement.getFullName() + " Sequence " + sequence + " came after " + lastReceivedSequence + ", possible overlap with other transmission?");
 												break;
 											}
 										}
 										else
 										{
-											System.err.println ("Error: " + announcement.getFullName() + " Packet length " + length + " does not match blksize " + blksize + ", dump " + dataDump (data, 16) + ".");
+											GUIMain.logger.severe(announcement.getFullName() + " Packet length " + length + " does not match blksize " + blksize + ", dump " + dataDump (data, 16) + ".");
 											break;
 										}
 									}
 									else
 									{
-										System.err.println ("Error: " + announcement.getFullName() + " Invalid sequence number " + sequence + " (numPackets=" + totalNumberOfPackets + ", dump " + dataDump (data, 16) + ".");
+										GUIMain.logger.severe(announcement.getFullName() + " Invalid sequence number " + sequence + " (numPackets=" + totalNumberOfPackets + ", dump " + dataDump (data, 16) + ".");
 										break;
 									}
 								}
 								else
 								{
-									System.err.print ("Error: " + announcement.getFullName() + " Unknown or unimplemented transferMode, or short packet. Dump:" + dataDump (data, 16) + ". Announcement was:" + announcement);
+									GUIMain.logger.severe(announcement.getFullName() + " Unknown or unimplemented transferMode, or short packet. Dump:" + dataDump (data, 16) + ". Announcement was:" + announcement);
 									break;
 								}
 							}
 							else
 							{
-								System.err.print ("Error: " + announcement.getFullName() + " Reveived packet does not start with 0x?? 0x03. Dump:" + dataDump (data, 16) + ". Announcement was:" + announcement);
+								GUIMain.logger.severe(announcement.getFullName() + " Reveived packet does not start with 0x?? 0x03. Dump:" + dataDump (data, 16) + ". Announcement was:" + announcement);
 								break;
 							}
 						}
 						else
 						{
-							System.err.println ("Warning: " + announcement.getFullName() + " Short packet received, ignoring");
+							GUIMain.logger.warning(announcement.getFullName() + " Short packet received, ignoring");
 							break;
 						}
 	/*
 					}
 					else
 					{
-						System.err.println ("Warning: " + announcement.getFullName() + " Ignoring packet from port " + packet.getPort() + ", expected port " + port);
+						GUIMain.logger.warning(announcement.getFullName() + " Ignoring packet from port " + packet.getPort() + ", expected port " + port);
 					}
 	 */
 				}
@@ -221,11 +221,11 @@ public class ReceiverContentReader extends ContentReader implements Settings.Set
 		}
 		catch (SocketTimeoutException e)
 		{
-			System.err.println ("Warning: Timeout " + announcement.getFullName());
+			GUIMain.logger.warning("Timeout " + announcement.getFullName());
 		}
 		catch (SocketException e)
 		{
-			System.err.println ("Warning: Socket Exception: " + e.getLocalizedMessage() + " " + announcement.getFullName());
+			GUIMain.logger.warning("Socket Exception: " + e.getMessage() + " " + announcement.getFullName());
 		}
 		finally
 		{
@@ -254,7 +254,7 @@ public class ReceiverContentReader extends ContentReader implements Settings.Set
 			if (partsToRetrieve.isEmpty())
 			{
 				deleteProgressFile();
-System.out.println ("Finished: " + announcement.getPlainName());
+				GUIMain.logger.info("Finished: " + announcement.getPlainName());
 				notifyTransmissionCompleted();
 			}
 			else
@@ -297,7 +297,7 @@ System.out.println ("Finished: " + announcement.getPlainName());
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 	}
 

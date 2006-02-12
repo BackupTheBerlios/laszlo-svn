@@ -82,7 +82,7 @@ public class BookingAnnouncement implements Serializable
 							Hashtable subHashtable = new Hashtable();
 							xml2Hashtable (childElement, subHashtable);
 							String tagName = childElement.getTagName();
-//	System.out.println ("H " + tagName + " " + subchild);
+							//	System.out.println ("H " + tagName + " " + subchild);
 							Object existing = hashtable.get (tagName);
 							if (existing == null)
 							{
@@ -106,7 +106,7 @@ public class BookingAnnouncement implements Serializable
 					{
 						Text subText = (Text) subchild;
 						String tagName = childElement.getTagName();
-//System.out.println ("T " + tagName + " " + subText.getData());
+						//System.out.println ("T " + tagName + " " + subText.getData());
 						Object existing = hashtable.get (tagName);
 						if (existing == null)
 						{
@@ -126,7 +126,7 @@ public class BookingAnnouncement implements Serializable
 						}
 					}
 //					else
-//System.out.println ("N " + subchild);
+						//System.out.println ("N " + subchild);
 				}
 			}
 		}

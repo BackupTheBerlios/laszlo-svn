@@ -115,7 +115,7 @@ public class ReceptionProcessor implements Receiver.NewTransmissionListener, Con
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 		}
 	}

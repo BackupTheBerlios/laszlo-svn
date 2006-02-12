@@ -69,7 +69,7 @@ public class Announcement implements Serializable
 		int length = packet.getLength();
 		if ((data [offset] != (byte) 0) || (data [offset+1] != (byte) 2))
 		{
-			System.err.println ("Warning: First two bytes of datagram are not 0x00 0x02.");
+			GUIMain.logger.warning("First two bytes of datagram are not 0x00 0x02.");
 		}
 
 		int field=FIELD_FULLNAME;
@@ -96,7 +96,7 @@ public class Announcement implements Serializable
 						mustBeOctet = str;
 						if (!str.equals ("octet"))
 						{
-							System.err.println ("Warnung: second field is not 'octet'. My protocol implementation may not cope with that.");
+							GUIMain.logger.warning("second field is not 'octet'. My protocol implementation may not cope with that.");
 						}
 						field = FIELD_DETAILNAME;
 						break;

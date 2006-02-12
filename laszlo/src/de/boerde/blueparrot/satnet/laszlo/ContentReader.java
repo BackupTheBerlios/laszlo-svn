@@ -175,11 +175,11 @@ public class ContentReader
 			out.writeObject (xmlAnnouncement);
 			out.writeInt (received);
 			out.writeObject (partsToRetrieve);
-//			System.out.println ("Saved progress information for file " + announcement.getFullName() + " id " + fileid + " tsize " + tsize + " blksize " + announcement.getDetail ("blksize") + " received " + received + " partsToRetrieve " + partsToRetrieve);
+//			GUIMain.logger.info("Saved progress information for file " + announcement.getFullName() + " id " + fileid + " tsize " + tsize + " blksize " + announcement.getDetail ("blksize") + " received " + received + " partsToRetrieve " + partsToRetrieve);
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 		finally
 		{
@@ -190,7 +190,7 @@ public class ContentReader
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 		}
 	}
@@ -223,16 +223,16 @@ public class ContentReader
 				xmlAnnouncement = tempXmlAnnouncement;
 				received = tempReceived;
 				partsToRetrieve = tempPartsToRetrieve;
-//				System.out.println ("Loaded progress information for file " + announcement.getFullName() + " id " + fileid + " tsize " + tsize + " blksize " + announcement.getDetail ("blksize") + " received " + received + " partsToRetrieve " + partsToRetrieve);
+//				GUIMain.logger.info("Loaded progress information for file " + announcement.getFullName() + " id " + fileid + " tsize " + tsize + " blksize " + announcement.getDetail ("blksize") + " received " + received + " partsToRetrieve " + partsToRetrieve);
 			}
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 		catch (Exception e)
 		{
-			System.err.println ("Warning: File " + announcement.getFullName() + " id " + fileid + " broken progress file");
+			GUIMain.logger.warning("File " + announcement.getFullName() + " id " + fileid + " broken progress file");
 		}
 		finally
 		{
@@ -243,7 +243,7 @@ public class ContentReader
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 		}
 	}
@@ -333,7 +333,7 @@ public class ContentReader
 			name = name.substring (0, name.length() - progressSuffix.length());
 			File actualFile = new File (name);
 			actualFile.delete();
-			System.err.println ("Warning: File " + file.getAbsolutePath() + " broken progress file, deleting");
+			GUIMain.logger.warning("File " + file.getAbsolutePath() + " broken progress file, deleting");
 		}
 		finally
 		{
@@ -344,7 +344,7 @@ public class ContentReader
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 		}
 		return result;
@@ -588,7 +588,7 @@ public class ContentReader
 				}
 				catch (Throwable t)
 				{
-					t.printStackTrace (System.err);
+					GUIMain.logger.severe(t.getMessage());
 				}
 			}
 		}

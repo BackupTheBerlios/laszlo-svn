@@ -65,7 +65,7 @@ public class XMLAnnouncementManager
 						if (file.getName().endsWith (".xml"))
 						{
 							String fileName = file.getAbsolutePath();
-							System.out.println ("Info: Reading old XML announcement from " + fileName);
+							GUIMain.logger.info("Reading old XML announcement from " + fileName);
 							newXMLAnnouncementList (fileName);
 						}
 					}
@@ -74,7 +74,7 @@ public class XMLAnnouncementManager
 		}
 		catch (ParserConfigurationException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 	}
 
@@ -110,11 +110,11 @@ public class XMLAnnouncementManager
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 		catch (SAXException e)
 		{
-			System.err.println ("Error: In file " + localFile + ": " + e);
+			GUIMain.logger.severe("In file " + localFile + ": " + e.getMessage());
 		}
 	}
 

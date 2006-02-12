@@ -59,7 +59,7 @@ public class AnnouncementReader implements Settings.SettingsChangedListener
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 		}
 	}
 
@@ -133,7 +133,7 @@ public class AnnouncementReader implements Settings.SettingsChangedListener
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 		}
 	}

@@ -60,8 +60,7 @@ public class ReceiverContentReaderThread extends Thread
 		}
 		catch (IOException e)
 		{
-			System.err.println ("Error in: " + announcement);
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe("Error in " + announcement + ": " + e.getMessage());
 		}
 	}
 }

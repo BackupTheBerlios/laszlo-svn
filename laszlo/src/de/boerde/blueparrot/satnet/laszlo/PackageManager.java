@@ -89,7 +89,7 @@ public class PackageManager
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 			finally
 			{
@@ -100,7 +100,7 @@ public class PackageManager
 				}
 				catch (IOException e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 			}
 		}
@@ -207,11 +207,11 @@ public class PackageManager
 		}
 		catch (InvalidClassException e)
 		{
-			System.out.println ("Error: Invalid package information in " + dir);
+			GUIMain.logger.severe("Invalid package information in " + dir);
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace (System.err);
+			GUIMain.logger.severe(e.getMessage());
 			info = null;
 		}
 		finally
@@ -223,7 +223,7 @@ public class PackageManager
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 		}
 		return info;
@@ -306,7 +306,7 @@ public class PackageManager
 						}
 						else
 						{
-							System.out.println ("Expire: " + info.getXmlAnnouncement().getUrl());
+							GUIMain.logger.info("Expire: " + info.getXmlAnnouncement().getUrl());
 							invalidPkgDirs.add (subdir);
 						}
 					}
@@ -368,7 +368,7 @@ public class PackageManager
 						long packageTime = info.getXmlAnnouncement().getUpdatedTime();
 						if (packageTime < oldestAllowedTime)
 						{
-							System.out.println ("Expire: " + info.getXmlAnnouncement().getUrl());
+							GUIMain.logger.info("Expire: " + info.getXmlAnnouncement().getUrl());
 							packagesByUrl.remove (url);
 							packagesExpired.add (info);
 							packageOrganizer.removePackageInfo (info);
@@ -471,7 +471,7 @@ public class PackageManager
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace (System.err);
+				GUIMain.logger.severe(e.getMessage());
 			}
 			finally
 			{
@@ -482,7 +482,7 @@ public class PackageManager
 				}
 				catch (IOException e)
 				{
-					e.printStackTrace (System.err);
+					GUIMain.logger.severe(e.getMessage());
 				}
 			}
 		}
