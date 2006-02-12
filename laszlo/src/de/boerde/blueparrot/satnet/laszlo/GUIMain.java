@@ -44,7 +44,7 @@ public class GUIMain
 	public static void main (String[] args) throws IOException
 	{
 		Receiver recv = new Receiver();
-		//ReceptionProcessor processor = new ReceptionProcessor (recv);
+		ReceptionProcessor processor = new ReceptionProcessor (recv);
 		TransferStatusWindow frame = new TransferStatusWindow (recv);
 		recv.start();
 		frame.pack();
