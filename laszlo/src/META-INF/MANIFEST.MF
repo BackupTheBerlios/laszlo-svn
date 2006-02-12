@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Main-Class: de.boerde.blueparrot.satnet.laszlo.GUIMain

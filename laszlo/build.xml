@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<project default="build">
+
+	<target name="compile">
+    		<javac srcdir="src" destdir="bin"
+    			source="1.4"/>
+    	</target>
+	
+	<target name="build" depends="compile">
+		<jar destfile="laszlo.jar" manifest="src/META-INF/MANIFEST.MF">
+			<fileset dir="bin"/>
+			<fileset dir="src">
+				<include name="de/boerde/blueparrot/satnet/laszlo/html/files/**"/>
+			</fileset>
+		</jar>
+	</target>
+
+</project>
