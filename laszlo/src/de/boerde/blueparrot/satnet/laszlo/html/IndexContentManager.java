@@ -48,7 +48,7 @@ public class IndexContentManager implements Producer
 	{
 		urls = new Hashtable();
 		setPath ("", new MainIndexGenerator());
-		setPath ("files", new ResourceFetchingProducer ("/files", "de/westfalen/fuldix/roland/satnet/laszlo/html/files/"));
+		setPath ("files", new ResourceFetchingProducer ("/files", "de/boerde/blueparrot/satnet/laszlo/html/files/"));
 		ReceivedAdsGenerator receivedAdsGenerator = new ReceivedAdsGenerator();
 		setPath ("advertising", new AdvertisingGenerator (receivedAdsGenerator));
 		setPath ("ads_received", receivedAdsGenerator);
