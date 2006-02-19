@@ -54,8 +54,6 @@ public class ReceiverContentReader extends ContentReader implements
 
 	protected String workDir;
 
-	// private static InetAddressFormat inetAddressFormat = new
-	// InetAddressFormat();
 
 	public ReceiverContentReader(Announcement announcement) throws IOException,
 			ProtocolException {
@@ -85,8 +83,8 @@ public class ReceiverContentReader extends ContentReader implements
 			timeout = 120;
 		}
 		socket.setSoTimeout(timeout * 1000); // Java uses milliseconds, what
-												// is the timeout value from the
-												// announcement?
+											 // is the timeout value from the
+											 // announcement?
 		totalNumberOfPackets = (tsize % blksize == 0) ? tsize / blksize : tsize
 				/ blksize + 1;
 		partsToRetrieve = new ForwardBitChunkList(0, totalNumberOfPackets);
@@ -122,9 +120,6 @@ public class ReceiverContentReader extends ContentReader implements
 			synchronized (socket) {
 				while (!partsToRetrieve.isEmpty()) {
 					socket.receive(packet);
-					/*
-					 * if (packet.getPort() == port) {
-					 */
 					int length = packet.getLength();
 					if (length >= 2) {
 						byte[] data = packet.getData();
@@ -134,20 +129,9 @@ public class ReceiverContentReader extends ContentReader implements
 							switch (data[offset]) {
 							case 0: {
 								if (length >= 4) {
-									sequence = (((data[offset + 2] & 0xff) << 8) | (data[offset + 3] & 0xff)) - 1; // actual
-																													// data
-																													// packets
-																													// start
-																													// at
-																													// 1;
-																													// we
-																													// start
-																													// our
-																													// counting
-																													// at
-																													// zero.
-									offset += 4; // skip the four header
-													// bytes
+									sequence = (((data[offset + 2] & 0xff) << 8) | (data[offset + 3] & 0xff)) - 1;
+									// actual data packets start at 1; we start our counting at zero.
+									offset += 4; // skip the four header bytes
 									length -= 4;
 								} else {
 									sequence = -1;
@@ -158,18 +142,8 @@ public class ReceiverContentReader extends ContentReader implements
 								if (length >= 6) {
 									sequence = (((data[offset + 2] & 0xff) << 24)
 											| ((data[offset + 3] & 0xff) << 16)
-											| ((data[offset + 4] & 0xff) << 8) | (data[offset + 5] & 0xff)) - 1; // actual
-																													// data
-																													// packets
-																													// start
-																													// at
-																													// 1;
-																													// we
-																													// start
-																													// our
-																													// counting
-																													// at
-																													// zero.
+											| ((data[offset + 4] & 0xff) << 8) | (data[offset + 5] & 0xff)) - 1;
+									// actual data packets start at 1; we start our counting at zero.
 									offset += 6; // skip the six header bytes
 									length -= 6;
 								} else {
@@ -197,8 +171,7 @@ public class ReceiverContentReader extends ContentReader implements
 											lastReceivedSequence = sequence;
 											if (sequence == totalNumberOfPackets - 1)
 												break;
-										} else { // XXX: possible to ignore
-													// overlap errors?
+										} else {
 											GUIMain
 													.getLogger()
 													.warning(
@@ -209,7 +182,7 @@ public class ReceiverContentReader extends ContentReader implements
 																	+ " came after "
 																	+ lastReceivedSequence
 																	+ ", possible overlap with other transmission?");
-											// break;
+											break;
 										}
 									} else {
 										GUIMain
@@ -247,9 +220,9 @@ public class ReceiverContentReader extends ContentReader implements
 										.getLogger()
 										.severe(
 												announcement.getFullName()
-														+ " Unknown or unimplemented transferMode, or short packet. Dump:"
+														+ " Unknown or unimplemented transferMode, or short packet. Dump: "
 														+ dataDump(data, 16)
-														+ ". Announcement was:"
+														+ ". Announcement was: "
 														+ announcement);
 								break;
 							}
@@ -258,9 +231,9 @@ public class ReceiverContentReader extends ContentReader implements
 									.getLogger()
 									.severe(
 											announcement.getFullName()
-													+ " Reveived packet does not start with 0x?? 0x03. Dump:"
+													+ " Reveived packet does not start with 0x?? 0x03. Dump: "
 													+ dataDump(data, 16)
-													+ ". Announcement was:"
+													+ ". Announcement was: "
 													+ announcement);
 							break;
 						}
@@ -270,12 +243,6 @@ public class ReceiverContentReader extends ContentReader implements
 										+ " Short packet received, ignoring");
 						break;
 					}
-					/*
-					 * } else {
-					 * GUIMain.logger.warning(announcement.getFullName() + "
-					 * Ignoring packet from port " + packet.getPort() + ",
-					 * expected port " + port); }
-					 */
 				}
 			}
 		} catch (SocketTimeoutException e) {
@@ -292,10 +259,7 @@ public class ReceiverContentReader extends ContentReader implements
 				else
 					file.delete();
 			}
-			/*
-			 * synchronized (socket) { if (!socket.isClosed()) {
-			 * socket.leaveGroup (contentaddress); socket.close(); } }
-			 */
+
 			socketInfo.close();
 			if (out != null) {
 				out.close();
@@ -310,13 +274,6 @@ public class ReceiverContentReader extends ContentReader implements
 				notifyTransmissionIncomplete();
 			}
 
-			/*
-			 * done=true;
-			 * 
-			 * synchronized (socket) { if (!socket.isClosed()) { try {
-			 * Thread.sleep (timeout * 1000); } catch (InterruptedException e) { }
-			 * socket.leaveGroup (contentaddress); socket.close(); } }
-			 */
 			done = true;
 		}
 	}
