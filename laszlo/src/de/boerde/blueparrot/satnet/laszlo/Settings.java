@@ -49,7 +49,9 @@ public class Settings extends Properties
 
 	private static File getSettingsFile()
 	{
-		String fileName = System.getProperty ("user.home") + File.separator + ".lazlo" + File.separator + "lazlo.properties";
+		String fileName = GUIMain.getSettingsFileArg(); 
+		if(fileName == null)
+			fileName = 	System.getProperty ("user.home") + File.separator + ".lazlo" + File.separator + "lazlo.properties";
 		return new File (fileName);
 	}
 
@@ -306,11 +308,11 @@ public class Settings extends Properties
 					String os = System.getProperty ("os.name");
 					if (os != null && os.toLowerCase().indexOf ("windows") >= 0)
 					{
-						command = "\"%ProgramFiles%\\Resource Kit\\extract.exe\" /Y /E /L \"%%DESTDIR\" \"%%PACKEDFILE\"";
+						command = "\"%ProgramFiles%\\Resource Kit\\extract.exe\" /Y /E /L \"%%DESTDIR%%\" \"%%PACKEDFILE%%\"";
 					}
 					else
 					{
-						command = "\"cabextract\" -q -d \"%%DESTDIR%%\" \"%%PACKEDFILE\"";
+						command = "\"cabextract\" -q -d \"%%DESTDIR%%\" \"%%PACKEDFILE%%\"";
 					}
 				}
 			}

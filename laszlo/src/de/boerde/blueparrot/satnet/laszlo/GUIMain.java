@@ -44,8 +44,18 @@ public class GUIMain
 {
 	public static Logger logger = Logger.getLogger("laszlo");
 	
+	private static String settingsFileArg;
+	
+	public static String getSettingsFileArg() {
+		return settingsFileArg;
+	}
+	
 	public static void main (String[] args) throws IOException
-	{
+	{	
+		if(args.length > 0)
+		{
+			settingsFileArg = args[0];			
+		}
 		Receiver recv = new Receiver();
 		ReceptionProcessor processor = new ReceptionProcessor (recv);
 		TransferStatusWindow frame = new TransferStatusWindow (recv);
