@@ -77,7 +77,7 @@ public class HTTPProxyServer extends Thread implements Settings.SettingsChangedL
 							}
 							catch (Exception e)
 							{
-								GUIMain.logger.severe(e.getMessage());
+								GUIMain.getLogger().severe(e.getMessage());
 								wait();
 							}
 						}
@@ -106,7 +106,7 @@ public class HTTPProxyServer extends Thread implements Settings.SettingsChangedL
 					}
 					catch (IOException ex)
 					{
-						GUIMain.logger.severe(e.getMessage());
+						GUIMain.getLogger().severe(e.getMessage());
 					}
 					finally
 					{
@@ -115,12 +115,12 @@ public class HTTPProxyServer extends Thread implements Settings.SettingsChangedL
 				}
 				else
 				{
-					GUIMain.logger.severe(e.getMessage());
+					GUIMain.getLogger().severe(e.getMessage());
 				}
 			}
 			catch (Exception e)
 			{
-				GUIMain.logger.severe(e.getMessage());
+				GUIMain.getLogger().severe(e.getMessage());
 			}
 			finally
 			{
@@ -160,7 +160,7 @@ public class HTTPProxyServer extends Thread implements Settings.SettingsChangedL
 				}
 				catch (IOException e)
 				{
-					GUIMain.logger.severe(e.getMessage());
+					GUIMain.getLogger().severe(e.getMessage());
 				}
 			}
 			notify();

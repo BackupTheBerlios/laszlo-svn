@@ -1,25 +1,24 @@
 /*
-Laszlo, a reception software for a satellite-based push service.
-Copyright (C) 2004-2006  Roland Fulde
+ Laszlo, a reception software for a satellite-based push service.
+ Copyright (C) 2004-2006  Roland Fulde
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-MA 02110-1301, USA.
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ MA 02110-1301, USA.
 
-Project home page: http://laszlo.berlios.de/
-*/
-
+ Project home page: http://laszlo.berlios.de/
+ */
 
 /*
  * MulticastSocketPool.java
@@ -29,323 +28,299 @@ Project home page: http://laszlo.berlios.de/
 
 package de.boerde.blueparrot.satnet.laszlo;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
-import de.boerde.blueparrot.text.*;
+import de.boerde.blueparrot.text.InetAddressFormat;
 
 /**
- *
- * @author  roland
+ * 
+ * @author roland
  */
-public class MulticastSocketPool implements Settings.SettingsChangedListener
-{
+public class MulticastSocketPool implements Settings.SettingsChangedListener {
 	private Hashtable multicastToSocketInfo;
+
 	private SocketTimeoutHandler timeoutThread;
+
 	private NetworkInterface nic;
+
 	private boolean usePool;
 
-	public class SocketInfo
-	{
+	public class SocketInfo {
 		private String multicast;
+
 		private MulticastSocket socket;
+
 		private long timingOut;
+
 		private boolean isJoined;
+
 		private Announcement currentOwner;
+
 		private InetAddress multicastAddress;
 
-		protected SocketInfo (Announcement announcement) throws IOException, ProtocolException
-		{
+		protected SocketInfo(Announcement announcement) throws IOException,
+				ProtocolException {
 			currentOwner = announcement;
-			multicast = announcement.getDetail ("multicast");
-			StringTokenizer tok = new StringTokenizer (multicast, ",");
+			multicast = announcement.getDetail("multicast");
+			StringTokenizer tok = new StringTokenizer(multicast, ",");
 			int port;
-			try
-			{
+			try {
 				String contentip = tok.nextToken();
-				multicastAddress = inetAddressFormat.parse (contentip);
+				multicastAddress = inetAddressFormat.parse(contentip);
 				String portstr = tok.nextToken();
-				port = Integer.parseInt (portstr);
+				port = Integer.parseInt(portstr);
 				String unknownstr = tok.nextToken();
-				if (!"1".equals (unknownstr))
-				{
-					GUIMain.logger.warning("third parameter of multicast is not '1': " + announcement);
+				if (!"1".equals(unknownstr)) {
+					GUIMain.getLogger().warning(
+							"third parameter of multicast is not '1': "
+									+ announcement);
 				}
+			} catch (Exception e) {
+				throw new ProtocolException(
+						"Something in this announcement packet is invalid: "
+								+ announcement);
 			}
-			catch (Exception e)
-			{
-				throw new ProtocolException ("Something in this announcement packet is invalid: " + announcement);
-			}
-			socket = new MulticastSocket (port);
-			socket.setNetworkInterface (nic);
+			socket = new MulticastSocket(port);
+			socket.setNetworkInterface(nic);
 
 			this.multicastAddress = multicastAddress;
 			timingOut = -1;
 			isJoined = false;
 		}
 
-		protected Announcement getCurrentOwner()
-		{
+		protected Announcement getCurrentOwner() {
 			return currentOwner;
 		}
 
-		public MulticastSocket getSocket()
-		{
+		public MulticastSocket getSocket() {
 			return socket;
 		}
 
-		public void setTimingOut (long timingOut)
-		{
+		public void setTimingOut(long timingOut) {
 			this.timingOut = timingOut;
 		}
 
-		public void addTimingOut (long addTimeOut)
-		{
+		public void addTimingOut(long addTimeOut) {
 			timingOut = System.currentTimeMillis() + addTimeOut;
 		}
 
-		public void addTimingOut (String timeOutString)
-		{
-			try
-			{
-				this.timingOut = (Long.parseLong (timeOutString) * 1000) + System.currentTimeMillis();
-			}
-			catch (NumberFormatException e)
-			{
+		public void addTimingOut(String timeOutString) {
+			try {
+				this.timingOut = (Long.parseLong(timeOutString) * 1000)
+						+ System.currentTimeMillis();
+			} catch (NumberFormatException e) {
 				this.timingOut = System.currentTimeMillis();
 			}
 		}
 
-		public long getTimingOut()
-		{
+		public long getTimingOut() {
 			return timingOut;
 		}
 
-		public boolean isTimedOut()
-		{
+		public boolean isTimedOut() {
 			return (timingOut > 0) && (timingOut > System.currentTimeMillis());
 		}
 
-		public void joinGroup() throws IOException
-		{
-			if (!isJoined)
-			{
-				//GUIMain.logger.info("--- joining " + multicast);
-				socket.joinGroup (multicastAddress);
+		public void joinGroup() throws IOException {
+			if (!isJoined) {
+				// GUIMain.logger.info("--- joining " + multicast);
+				socket.joinGroup(multicastAddress);
 				isJoined = true;
 			}
 		}
 
-		public void close()
-		{
-			if (usePool)
-			{
+		public void close() {
+			if (usePool) {
 				if (currentOwner == null)
 					return;
 
-				String timeout = currentOwner.getDetail ("timeout");
-				addTimingOut (timeout);
+				String timeout = currentOwner.getDetail("timeout");
+				addTimingOut(timeout);
 				currentOwner = null;
-			}
-			else
-			{
-				try
-				{
+			} else {
+				try {
 					currentOwner = null;
 					realClose();
-				}
-				catch (IOException e)
-				{
-					GUIMain.logger.severe(e.getMessage());
+				} catch (IOException e) {
+					GUIMain.getLogger().severe(e.getMessage());
 				}
 			}
 		}
 
-		protected void realClose() throws IOException
-		{
-			synchronized (MulticastSocketPool.this)
-			{
-				multicastToSocketInfo.remove (multicast);
+		protected void realClose() throws IOException {
+			synchronized (MulticastSocketPool.this) {
+				multicastToSocketInfo.remove(multicast);
 			}
 
-			if (currentOwner != null)
-			{
-				GUIMain.logger.warning("multicast socket " + currentOwner.getDetail ("multicast") + " is physically closed but seems to be still in use by " + currentOwner.getFullName());
+			if (currentOwner != null) {
+				GUIMain
+						.getLogger()
+						.warning(
+								"multicast socket "
+										+ currentOwner.getDetail("multicast")
+										+ " is physically closed but seems to be still in use by "
+										+ currentOwner.getFullName());
 			}
 
-			if (isJoined)
-			{
-				//GUIMain.logger.info("--- leaving " + multicast);
-				socket.leaveGroup (multicastAddress);
+			if (isJoined) {
+				// GUIMain.logger.info("--- leaving " + multicast);
+				socket.leaveGroup(multicastAddress);
 				isJoined = false;
 			}
 			socket.close();
 		}
 	}
 
-	private class SocketTimeoutHandler extends Thread
-	{
+	private class SocketTimeoutHandler extends Thread {
 		private boolean shouldRun = true;
 
-		protected SocketTimeoutHandler()
-		{
-			setPriority (MIN_PRIORITY);
+		protected SocketTimeoutHandler() {
+			setPriority(MIN_PRIORITY);
 		}
 
-		public void run()
-		{
-			while (shouldRun)
-			{
-				synchronized (MulticastSocketPool.this)
-				{
+		public void run() {
+			while (shouldRun) {
+				synchronized (MulticastSocketPool.this) {
 					long now = System.currentTimeMillis();
 					Enumeration infoEnum = multicastToSocketInfo.keys();
-					while (infoEnum.hasMoreElements())
-					{
+					while (infoEnum.hasMoreElements()) {
 						String multicast = (String) infoEnum.nextElement();
-						SocketInfo info = (SocketInfo) multicastToSocketInfo.get (multicast);
+						SocketInfo info = (SocketInfo) multicastToSocketInfo
+								.get(multicast);
 						long timingOut = info.getTimingOut();
-						if ((timingOut > 0) && (timingOut < now))
-						{
-							try
-							{
+						if ((timingOut > 0) && (timingOut < now)) {
+							try {
 								info.realClose();
+							} catch (IOException e) {
+								GUIMain.getLogger().severe(e.getMessage());
 							}
-							catch (IOException e)
-							{
-								GUIMain.logger.severe(e.getMessage());
-							}
-							multicastToSocketInfo.remove (multicast);
+							multicastToSocketInfo.remove(multicast);
 						}
 					}
 				}
-				try
-				{
-					synchronized (this)
-					{
-						wait (10000);
+				try {
+					synchronized (this) {
+						wait(10000);
 					}
-				}
-				catch (InterruptedException e)
-				{
+				} catch (InterruptedException e) {
 				}
 			}
 		}
 	}
 
-	private class ExitHook extends Thread
-	{
-		public void run()
-		{
+	private class ExitHook extends Thread {
+		public void run() {
 			closeAllSockets();
 		}
 	}
 
 	/** Creates a new instance of MulticastSocketPool */
-	private MulticastSocketPool()
-	{
+	private MulticastSocketPool() {
 		Settings settings = Settings.getSettings();
 		multicastToSocketInfo = new Hashtable();
 		nic = settings.getDVBInterface();
 		usePool = settings.getReceiveUseMulticastPool();
-		settings.addSettingsChangedListener (this);
+		settings.addSettingsChangedListener(this);
 		timeoutThread = new SocketTimeoutHandler();
 		timeoutThread.start();
 		Runtime runtime = Runtime.getRuntime();
-		runtime.addShutdownHook (new ExitHook());
+		runtime.addShutdownHook(new ExitHook());
 	}
 
-	public synchronized SocketInfo getSocket (Announcement announcement) throws IOException, ProtocolException
-	{
-		String multicast = announcement.getDetail ("multicast");
+	public synchronized SocketInfo getSocket(Announcement announcement)
+			throws IOException, ProtocolException {
+		String multicast = announcement.getDetail("multicast");
 		SocketInfo socketInfo = null;
-		if (usePool)
-		{
-			socketInfo = (SocketInfo) multicastToSocketInfo.get (multicast);
-			if (socketInfo != null)
-			{
-				if (socketInfo.getCurrentOwner() != null)
-				{
-					socketInfo.getSocket().setSoTimeout (1);	// in case someone's still trying to read, better time out soon...
-					GUIMain.logger.warning("Socket " + multicast + " ist retrieved but still in use by " + announcement.getFullName());
+		if (usePool) {
+			socketInfo = (SocketInfo) multicastToSocketInfo.get(multicast);
+			if (socketInfo != null) {
+				if (socketInfo.getCurrentOwner() != null) {
+					socketInfo.getSocket().setSoTimeout(1); // in case someone's
+															// still trying to
+															// read, better time
+															// out soon...
+					GUIMain.getLogger().warning(
+							"Socket " + multicast
+									+ " ist retrieved but still in use by "
+									+ announcement.getFullName());
 				}
-				socketInfo.setTimingOut (-1);	// Don't bother as long as the ContentReader is active on the socket
+				socketInfo.setTimingOut(-1); // Don't bother as long as the
+												// ContentReader is active on
+												// the socket
 			}
 		}
-		if (socketInfo == null)
-		{
-			socketInfo = new SocketInfo (announcement);
-			multicastToSocketInfo.put (multicast, socketInfo);
+		if (socketInfo == null) {
+			socketInfo = new SocketInfo(announcement);
+			multicastToSocketInfo.put(multicast, socketInfo);
 		}
 		return socketInfo;
 	}
 
-	public synchronized void checkSocket (Announcement announcement) throws IOException
-	{
-		String multicast = announcement.getDetail ("multicast");
+	public synchronized void checkSocket(Announcement announcement)
+			throws IOException {
+		String multicast = announcement.getDetail("multicast");
 		SocketInfo socketInfo = null;
-		if(multicast != null)
-		    socketInfo = (SocketInfo)multicastToSocketInfo.get(multicast);
-		if (socketInfo != null)
-		{
-			if (socketInfo.getCurrentOwner() != null)
-			{
-				socketInfo.getSocket().setSoTimeout (1);	// in case someone's still trying to read, better time out soon...
-				GUIMain.logger.warning("Socket " + multicast + " is checked but still in use by " + announcement.getFullName());
+		if (multicast != null)
+			socketInfo = (SocketInfo) multicastToSocketInfo.get(multicast);
+		if (socketInfo != null) {
+			if (socketInfo.getCurrentOwner() != null) {
+				socketInfo.getSocket().setSoTimeout(1); // in case someone's
+														// still trying to read,
+														// better time out
+														// soon...
+				GUIMain.getLogger().warning(
+						"Socket " + multicast
+								+ " is checked but still in use by "
+								+ announcement.getFullName());
 			}
 			long timeoutTime = 0;
-			try
-			{
-				String timeoutStr = announcement.getDetail ("timeout");
-				String tsizeStr = announcement.getDetail ("tsize");
-				String bitrateStr = announcement.getDetail ("bitrate");
-				int timeout = Integer.parseInt (timeoutStr);
+			try {
+				String timeoutStr = announcement.getDetail("timeout");
+				String tsizeStr = announcement.getDetail("tsize");
+				String bitrateStr = announcement.getDetail("bitrate");
+				int timeout = Integer.parseInt(timeoutStr);
 				timeoutTime = timeout * (long) 1000;
-				int tsize = Integer.parseInt (tsizeStr);
-				int bitrate = Integer.parseInt (bitrateStr);
-				long transferTime = tsize  * (long) 1000 / bitrate;
+				int tsize = Integer.parseInt(tsizeStr);
+				int bitrate = Integer.parseInt(bitrateStr);
+				long transferTime = tsize * (long) 1000 / bitrate;
 				timeoutTime += transferTime;
+			} catch (Exception e) {
+				GUIMain.getLogger().severe(e.getMessage());
 			}
-			catch (Exception e)
-			{
-				GUIMain.logger.severe(e.getMessage());
-			}
-			socketInfo.addTimingOut (timeoutTime);
+			socketInfo.addTimingOut(timeoutTime);
 		}
 	}
 
-	public void checkTimeouts()
-	{
-		synchronized (timeoutThread)
-		{
+	public void checkTimeouts() {
+		synchronized (timeoutThread) {
 			timeoutThread.notify();
 		}
 	}
 
-	private synchronized void closeAllSockets()
-	{
+	private synchronized void closeAllSockets() {
 		Enumeration infoEnum = multicastToSocketInfo.keys();
-		while (infoEnum.hasMoreElements())
-		{
+		while (infoEnum.hasMoreElements()) {
 			String multicast = (String) infoEnum.nextElement();
-			SocketInfo info = (SocketInfo) multicastToSocketInfo.get (multicast);
-			try
-			{
+			SocketInfo info = (SocketInfo) multicastToSocketInfo.get(multicast);
+			try {
 				info.realClose();
-			}
-			catch (IOException e)
-			{
-				GUIMain.logger.severe(e.getMessage());
+			} catch (IOException e) {
+				GUIMain.getLogger().severe(e.getMessage());
 			}
 		}
 		multicastToSocketInfo.clear();
 	}
 
-	public void settingsChanged (Settings newSettings)
-	{
+	public void settingsChanged(Settings newSettings) {
 		boolean newUsePool = newSettings.getReceiveUseMulticastPool();
-		if (nic.equals (newSettings.getDVBInterface()) && (usePool == newUsePool))
+		if (nic.equals(newSettings.getDVBInterface())
+				&& (usePool == newUsePool))
 			return;
 
 		if (!usePool)
@@ -357,8 +332,7 @@ public class MulticastSocketPool implements Settings.SettingsChangedListener
 
 	private static MulticastSocketPool theMulticastSocketPool = new MulticastSocketPool();
 
-	public static MulticastSocketPool getMulticastSocketPool()
-	{
+	public static MulticastSocketPool getMulticastSocketPool() {
 		return theMulticastSocketPool;
 	}
 

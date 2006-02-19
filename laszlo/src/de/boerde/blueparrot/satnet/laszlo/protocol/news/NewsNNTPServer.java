@@ -76,7 +76,7 @@ public class NewsNNTPServer extends Thread implements Settings.SettingsChangedLi
 							}
 							catch (Exception e)
 							{
-								GUIMain.logger.severe(e.getMessage());
+								GUIMain.getLogger().severe(e.getMessage());
 								wait();
 							}
 						}
@@ -105,7 +105,7 @@ public class NewsNNTPServer extends Thread implements Settings.SettingsChangedLi
 					}
 					catch (IOException e1)
 					{
-						GUIMain.logger.severe(e1.getMessage());
+						GUIMain.getLogger().severe(e1.getMessage());
 					}
 					finally
 					{
@@ -114,12 +114,12 @@ public class NewsNNTPServer extends Thread implements Settings.SettingsChangedLi
 				}
 				else
 				{
-					GUIMain.logger.severe(e.getMessage());
+					GUIMain.getLogger().severe(e.getMessage());
 				}
 			}
 			catch (Exception e)
 			{
-				GUIMain.logger.severe(e.getMessage());
+				GUIMain.getLogger().severe(e.getMessage());
 			}
 		}
 		Settings settings = Settings.getSettings();
@@ -146,7 +146,7 @@ public class NewsNNTPServer extends Thread implements Settings.SettingsChangedLi
 				}
 				catch (IOException ex)
 				{
-					GUIMain.logger.severe(ex.getMessage());
+					GUIMain.getLogger().severe(ex.getMessage());
 				}
 			}
 			notify();

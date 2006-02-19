@@ -144,15 +144,15 @@ public class HTTPProxyThread extends Thread
 		}
 		catch (SocketTimeoutException e)
 		{
-			GUIMain.logger.info("Timeout HTTP connection with " + connection.getInetAddress());
+			GUIMain.getLogger().info("Timeout HTTP connection with " + connection.getInetAddress());
 		}
 		catch (SocketException e)
 		{
-			GUIMain.logger.warning("SocketException " + e.getMessage() + " at " + requestInfo.getUri());
+			GUIMain.getLogger().warning("SocketException " + e.getMessage() + " at " + requestInfo.getUri());
 		}
 		catch (Throwable e)
 		{
-			GUIMain.logger.severe(e.getMessage());
+			GUIMain.getLogger().severe(e.getMessage());
 		}
 		finally
 		{
@@ -165,7 +165,7 @@ public class HTTPProxyThread extends Thread
 			}
 			catch (Exception e)
 			{
-				GUIMain.logger.severe(e.getMessage());
+				GUIMain.getLogger().severe(e.getMessage());
 			}
 			finally
 			{
@@ -178,7 +178,7 @@ public class HTTPProxyThread extends Thread
 				}
 				catch (Exception e)
 				{
-					GUIMain.logger.severe(e.getMessage());
+					GUIMain.getLogger().severe(e.getMessage());
 				}
 				finally
 				{
@@ -191,7 +191,7 @@ public class HTTPProxyThread extends Thread
 					}
 					catch (Exception e)
 					{
-						GUIMain.logger.severe(e.getMessage());
+						GUIMain.getLogger().severe(e.getMessage());
 					}
 				}
 			}

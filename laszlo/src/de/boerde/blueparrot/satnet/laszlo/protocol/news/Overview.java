@@ -133,7 +133,7 @@ public class Overview implements Serializable
 		}
 		catch (IOException e)
 		{
-			GUIMain.logger.severe(e.getMessage());
+			GUIMain.getLogger().severe(e.getMessage());
 			ok = false;
 		}
 		finally
@@ -144,7 +144,7 @@ public class Overview implements Serializable
 			}
 			catch (IOException e)
 			{
-				GUIMain.logger.severe(e.getMessage());
+				GUIMain.getLogger().severe(e.getMessage());
 			}
 			finally
 			{
@@ -156,7 +156,7 @@ public class Overview implements Serializable
 					}
 					catch (IOException e)
 					{
-						GUIMain.logger.severe(e.getMessage());
+						GUIMain.getLogger().severe(e.getMessage());
 					}
 				}
 			}
@@ -247,7 +247,7 @@ public class Overview implements Serializable
 		}
 		catch (IOException e)
 		{
-			GUIMain.logger.severe(e.getMessage());
+			GUIMain.getLogger().severe(e.getMessage());
 		}
 	}
 
@@ -281,7 +281,7 @@ public class Overview implements Serializable
 		}
 		catch (IOException e)
 		{
-			GUIMain.logger.severe(e.getMessage());
+			GUIMain.getLogger().severe(e.getMessage());
 			return "";
 		}
 	}
@@ -323,7 +323,7 @@ public class Overview implements Serializable
 		}
 		catch (IOException e)
 		{
-			GUIMain.logger.severe(e.getMessage());
+			GUIMain.getLogger().severe(e.getMessage());
 			return -1;
 		}
 	}
