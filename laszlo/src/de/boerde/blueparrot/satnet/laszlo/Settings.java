@@ -610,6 +610,8 @@ public class Settings extends Properties {
 		if (theme != null) {
 			if (theme.toLowerCase().trim().equals("motif"))
 				return "motif";
+			if (theme.toLowerCase().trim().equals("system"))
+				return "system";
 			try {
 				if (new File(theme).isFile()) {
 					return theme;

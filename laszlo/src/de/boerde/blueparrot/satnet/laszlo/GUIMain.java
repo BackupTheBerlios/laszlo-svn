@@ -85,6 +85,9 @@ public class GUIMain {
 			 if ("metal".equals(theme)) {
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 			}
+			else	 if ("system".equals(theme)) {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			}
 			else if ("motif".equals(theme)) {
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 			}
