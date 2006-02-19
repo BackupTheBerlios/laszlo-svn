@@ -72,8 +72,8 @@ Basic configuration:
 - Make sure the "Work Directory" is an empty directory and is not shared with
   any other data, because laszlo may rigorously delete any file under it.
 - Further settings can be added to the config file .lazlo/lazlo.properties under
-  the User's home directory. Some further possible settings and their defaults
-  are:
+  the User's home directory. A different config file may be specified as a command
+  line parameter. Some further possible settings and their defaults are:
    ExpireIncompleteFileAfterMinutes=720
    ExpireIncompleteFileCheckIntervalMinutes=5
    ExpirePackageAfterMinutes=20160 (two weeks)
@@ -92,6 +92,9 @@ Basic configuration:
    HttpProxyFetching=none|direct|upstreamProxy
    UpstreamHttpProxyHost=
    UpstreamHttpProxyPort=
+   LogLevel=info
+   LogFile=
+   Theme=metal
 
 
 General usage:
@@ -119,6 +122,15 @@ Point it to a new NNTP Server at Laszlo's IP address and NNTP port
 (defaults to 1119).
 Use the newsreader's subscribe function to select the newsgroups that you would
 like to read.
+
+
+Themes:
+
+The default is "metal", which stands for the the Java look and feel.
+Other possible values are "motif", which specifies the CDE/Motif look and feel,
+and "system", which specifies the look and feel for the current platform.
+To get the GTK+ look and feel, set the value to the path to the particular themes
+gtkrc file.
 
 
 What's already working:
