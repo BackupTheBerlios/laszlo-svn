@@ -106,7 +106,7 @@ public class XMLAnnouncementManager {
 		} catch (IOException e) {
 			GUIMain.getLogger().severe(e.getMessage());
 		} catch (SAXException e) {
-			GUIMain.getLogger().severe(
+			GUIMain.getLogger().warning(
 					"In file " + localFile + ": " + e.getMessage());
 		}
 	}
@@ -118,14 +118,6 @@ public class XMLAnnouncementManager {
 	public void removeXMLAnnouncement(String transferName) {
 		xmlAnnouncements.remove(transferName);
 	}
-
-	/*
-	 * public static String getSingleDetail (Element pkgNode, String detailName) {
-	 * NodeList packageNames = pkgNode.getElementsByTagName (detailName); for
-	 * (int pn=0; pn<packageNames.getLength(); pn++) { Node nameNode =
-	 * packageNames.item (pn); if (nameNode instanceof Element) { Element
-	 * pkgName = (Element) nameNode; return getText (pkgName); } } return ""; }
-	 */
 
 	private File findAnnouncementDir() {
 		Settings settings = Settings.getSettings();
@@ -151,15 +143,6 @@ public class XMLAnnouncementManager {
 		}
 		return null;
 	}
-
-	/*
-	 * public static String getText (Element elementNode) { StringBuffer result =
-	 * new StringBuffer(); NodeList children = elementNode.getChildNodes(); for
-	 * (int c=0; c<children.getLength(); c++) { Node child = children.item (c);
-	 * if ((child.getNodeType() == Node.TEXT_NODE) && (child instanceof Text)) {
-	 * String name = ((Text) child).getData(); result.append (name); } } return
-	 * result.toString(); }
-	 */
 
 	private static XMLAnnouncementManager theXMLAnnouncementManager = new XMLAnnouncementManager();
 

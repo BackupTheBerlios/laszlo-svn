@@ -187,7 +187,7 @@ public class ReceiverContentReader extends ContentReader implements
 									} else {
 										GUIMain
 												.getLogger()
-												.severe(
+												.warning(
 														announcement
 																.getFullName()
 																+ " Packet length "
@@ -204,7 +204,7 @@ public class ReceiverContentReader extends ContentReader implements
 								} else {
 									GUIMain
 											.getLogger()
-											.severe(
+											.warning(
 													announcement.getFullName()
 															+ " Invalid sequence number "
 															+ sequence
@@ -218,7 +218,7 @@ public class ReceiverContentReader extends ContentReader implements
 							} else {
 								GUIMain
 										.getLogger()
-										.severe(
+										.warning(
 												announcement.getFullName()
 														+ " Unknown or unimplemented transferMode, or short packet. Dump: "
 														+ dataDump(data, 16)
@@ -229,7 +229,7 @@ public class ReceiverContentReader extends ContentReader implements
 						} else {
 							GUIMain
 									.getLogger()
-									.severe(
+									.warning(
 											announcement.getFullName()
 													+ " Reveived packet does not start with 0x?? 0x03. Dump: "
 													+ dataDump(data, 16)

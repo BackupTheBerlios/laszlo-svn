@@ -151,31 +151,11 @@ public class CacheContentManager implements ContentManager,
 							String testFileAbsolutePath = testFile
 									.getAbsolutePath();
 							if (testFileAbsolutePath
-									.startsWith(hostdirAbsolutePath)) { // make
-																		// sure
-																		// we
-																		// stay
-																		// in
-																		// the
-																		// correct
-																		// host
-																		// directory
-																		// and
-																		// do
-																		// not
-																		// navigate
-																		// out
-																		// of it
-																		// via
-																		// any
-																		// ".."
-																		// or
-																		// similar
-																		// constructions,
-																		// to
-																		// prevent
-																		// javascript
-																		// attacks
+									.startsWith(hostdirAbsolutePath)) {
+								// make sure we stay in the correct host directory
+								// and do not navigate out of it via any ".." or
+								// similar constructions, to prevent javascript
+								// attacks
 								int hostdirAbsolutePathLen = hostdirAbsolutePath
 										.length();
 								if ((testFileAbsolutePath.length() == hostdirAbsolutePathLen)
@@ -262,11 +242,6 @@ public class CacheContentManager implements ContentManager,
 				if (!qMarkSeen) {
 					uriBuffer.setCharAt(i, File.separatorChar);
 				}
-				// else
-				// {
-				// GUIMain.logger.info("###### URI with / in query string.
-				// UNIMPLEMENTED. Please check how to handle this: " + uri);
-				// }
 				break;
 			}
 			case '\\': {
@@ -286,14 +261,11 @@ public class CacheContentManager implements ContentManager,
 						char d2 = uriBuffer.charAt(i + 2);
 						char c = (char) ((hexDigitToNumber(d1) << 4) | hexDigitToNumber(d2));
 						if (iteration > 0) {
-							if (((iteration - 1) & (1 << charsAmbiguous)) == 0)
-							// if (iteration -1 >= charsAmbiguous)
-							{
+							if (((iteration - 1) & (1 << charsAmbiguous)) == 0)	{
 								uriBuffer.setCharAt(i, c);
 								uriBuffer.delete(i + 1, i + 3);
 								if (c != '%') {
-									i--; // to loop over the same character
-											// again
+									i--; // to loop over the same character again
 								}
 							}
 							charsAmbiguous++;
@@ -308,12 +280,8 @@ public class CacheContentManager implements ContentManager,
 		}
 
 		if ((1 << charsAmbiguous) > (iteration)) {
-			// GUIMain.logger.info("#iter" + iteration + ": " +
-			// uriBuffer.toString());
 			return uriBuffer.toString();
 		} else {
-			// GUIMain.logger.info("#iter" + iteration + " ambig " +
-			// charsAmbiguous + ": nullExit " + uriBuffer.toString());
 			return null;
 		}
 	}

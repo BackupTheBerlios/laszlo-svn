@@ -72,15 +72,12 @@ public class Receiver extends Thread implements
 		while (running) {
 			try {
 				Announcement a = reader.getTransmission();
-				// String multicast = a.getDetail ("multicast");
-				// String timeout = a.getDetail ("timeout");
 				ReceptionFilter.Response shouldReceive = filter
 						.shouldReceive(a);
 				if (shouldReceive.getResult()) {
 					GUIMain.getLogger().info(
 							"Starting: " + a.getFullName() + " ("
 									+ a.getDetail("tsize") + " bytes)");
-					// String name = a.getPlainName();
 					try {
 						ReceiverContentReaderThread t = new ReceiverContentReaderThread(
 								a);
@@ -99,7 +96,7 @@ public class Receiver extends Thread implements
 						GUIMain.getLogger().severe(e.getMessage());
 					}
 				} else {
-					GUIMain.getLogger().warning(
+					GUIMain.getLogger().info(
 							"Skipping: " + a.getFullName() + " ("
 									+ a.getDetail("tsize") + " bytes) "
 									+ shouldReceive.getReason());
@@ -194,15 +191,8 @@ public class Receiver extends Thread implements
 				if (!reader.isClosed())
 					reader.close();
 			} catch (IOException e) {
+				// XXX
 			}
-			/*
-			 * // Now done my the MultiCastSocketPool... synchronized
-			 * (currentContentReaders) { Iterator iter =
-			 * currentContentReaders.iterator(); while (iter.hasNext()) {
-			 * ReceiverContentReader contentReader = (ReceiverContentReader)
-			 * iter.next(); synchronized (contentReader) { if
-			 * (!contentReader.isDone()) contentReader.interrupt(); } } }
-			 */
 			int shutdownTries = 5;
 			int shutdownWait = 500;
 			while (!currentContentReaders.isEmpty() && (shutdownTries > 0)) {

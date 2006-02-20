@@ -80,7 +80,7 @@ public class GUIMain {
 				logger.addHandler(logHandler);
 			}
 			if (logWarning != null) {
-				getLogger().warning(
+				getLogger().severe(
 						"Cannot open log file, fall back to console: "
 								+ logWarning);
 			}

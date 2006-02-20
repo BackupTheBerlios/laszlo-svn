@@ -147,7 +147,7 @@ public class ProviderNames {
 		} catch (ParserConfigurationException e) {
 			GUIMain.getLogger().severe(e.getMessage());
 		} catch (SAXException e) {
-			GUIMain.getLogger().severe(
+			GUIMain.getLogger().warning(
 					"Update Provider Names parse error on " + localFileName
 							+ ": " + e.getMessage());
 		} catch (IOException e) {
