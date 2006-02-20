@@ -14,10 +14,12 @@ Lightweight Alternative Satellite Zone Leveraging Option
 Requires:
 - DVB card and software
 - Reception of a suitable service, e.g. Casablanca/Sat@Once
-- J2RE 1.4.2 - http://java.sun.com/
+- Plenty of disk space, e.g. 20 GB
+- J2SE 1.4.2 - http://java.sun.com/
 - A tool to extract .cab files:
   * http://www.microsoft.com/windows2000/techinfo/reskit/tools/existing/extract-o.asp
   * http://www.kyz.uklinux.net/cabextract.php
+- To build Laszlo, Jakarta Ant is recommended - http://ant.apache.org/
 
 
 DVB Setup on Windows:
@@ -48,6 +50,10 @@ DVB Setup on Linux:
   you chose does not belong.
 
 
+Build Laszlo:
+
+Change into the top-level source directory, run ant.
+
 
 Run Laszlo:
 
@@ -56,7 +62,7 @@ Use a normally privileged user to run Laszlo, not root.
 
 Execute
 
-> java -jar laszlo.jar
+> java -server -jar laszlo.jar
 
 On Windows you can also use
 
@@ -71,9 +77,11 @@ Basic configuration:
 - Set "DVB Interface" to the DVB device on which you have tuned in the service
 - Make sure the "Work Directory" is an empty directory and is not shared with
   any other data, because laszlo may rigorously delete any file under it.
+  The "Work Directory" defaults to $HOME/.lazlo/work
 - Further settings can be added to the config file .lazlo/lazlo.properties under
   the User's home directory. A different config file may be specified as a command
   line parameter. Some further possible settings and their defaults are:
+   WorkDirectory=<users home dir>/.lazlo/work
    ExpireIncompleteFileAfterMinutes=720
    ExpireIncompleteFileCheckIntervalMinutes=5
    ExpirePackageAfterMinutes=20160 (two weeks)
@@ -91,10 +99,10 @@ Basic configuration:
    HttpOwnPseudoName=laszlo_index
    HttpProxyFetching=none|direct|upstreamProxy
    UpstreamHttpProxyHost=
-   UpstreamHttpProxyPort=
-   LogLevel=info
+   UpstreamHttpProxyPort=8080
+   LogLevel=info|warning|severe|off
    LogFile=
-   Theme=metal
+   Theme=metal|motif|system|<path to gtkrc>
 
 
 General usage:
@@ -228,7 +236,7 @@ Send your thoughts, comments, experiences, recommendations about/with/for
 Laszlo to:
   Holger Spielmann <holger@spielmann.boerde.de>
 
-Laszlo's home in the Web is currently
+Laszlo's home in the Web is
   http://laszlo.berlios.de/
 
 
