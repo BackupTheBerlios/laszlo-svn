@@ -166,11 +166,8 @@ public class Settings extends Properties {
 	public String getWorkDirectory() {
 		String workDirectory = getProperty("WorkDirectory");
 		if ((workDirectory == null) || "".equals(workDirectory)) {
-			workDirectory = System.getProperty("java.io.tmpdir");
-			if (workDirectory.endsWith(File.separator))
-				workDirectory += "laszlo";
-			else
-				workDirectory += File.separator + "laszlo";
+			workDirectory = System.getProperty("user.home")+ File.separator
+			+ ".lazlo" + File.separator + "work";
 		}
 		if (workDirectory.endsWith(File.separator))
 			workDirectory = workDirectory.substring(0,
@@ -555,7 +552,7 @@ public class Settings extends Properties {
 
 	public int getUpstreamHttpProxyPort() {
 		String portSetting = getProperty("UpstreamHttpProxyPort");
-		int port = 3128;
+		int port = 8080;
 		try {
 			port = Integer.parseInt(portSetting);
 		} catch (Exception e) {
@@ -624,10 +621,10 @@ public class Settings extends Properties {
 		return defaultTheme;
 	}
 	
-	public void setTheme(String laf) {
-		if(getTheme().equals(laf))
+	public void setTheme(String theme) {
+		if(getTheme().equals(theme))
 			return;
-		setProperty("UnixUI", laf);
+		setProperty("Theme", theme);
 	}
 
 	
