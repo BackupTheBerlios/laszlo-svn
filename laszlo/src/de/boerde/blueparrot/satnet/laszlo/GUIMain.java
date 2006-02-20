@@ -30,7 +30,12 @@ package de.boerde.blueparrot.satnet.laszlo;
 
 import java.io.IOException;
 import java.util.Locale;
-import java.util.logging.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 import javax.swing.UIManager;
 
 import de.boerde.blueparrot.satnet.laszlo.protocol.http.HTTPProxyServer;
@@ -55,46 +60,49 @@ public class GUIMain {
 	private static void initLogger() {
 		Settings settings = Settings.getSettings();
 		logger = Logger.getLogger("laszlo");
-		logger.setLevel(settings.getLogLevel());
-		Handler logHandler = null;
-		String logFile = settings.getLogFile();
-		String logWarning = null;
-		if (!"".equals(logFile)) {
-			try	{
-				logHandler = new FileHandler(logFile);
+		Level level = settings.getLogLevel();
+		logger.setLevel(level);
+		if (level != Level.OFF) {
+			logger.setLevel(settings.getLogLevel());
+			Handler logHandler = null;
+			String logFile = settings.getLogFile();
+			String logWarning = null;
+			if (!"".equals(logFile)) {
+				try {
+					logHandler = new FileHandler(logFile);
+				} catch (Exception e) {
+					logWarning = e.getMessage();
+				}
 			}
-			catch(Exception e) {
-				logWarning = e.getMessage();
+			if (logHandler != null) {
+				logHandler.setFormatter(new SimpleFormatter());
+				logger.setUseParentHandlers(false);
+				logger.addHandler(logHandler);
 			}
-		}
-		if (logHandler == null) {
-			logHandler = new ConsoleHandler();
-		}
-		logHandler.setFormatter(new SimpleFormatter());
-		logger.addHandler(logHandler);
-		if(logWarning != null) {
-			getLogger().warning("Cannot open log file, fall back to console: "
-					+ logWarning);
+			if (logWarning != null) {
+				getLogger().warning(
+						"Cannot open log file, fall back to console: "
+								+ logWarning);
+			}
 		}
 	}
 	
 	private static void initUI() {
 		
 		String theme = Settings.getSettings().getTheme();
+		String laf = UIManager.getCrossPlatformLookAndFeelClassName();
+		if ("system".equals(theme)) {
+			laf = UIManager.getSystemLookAndFeelClassName();
+		}
+		else if ("motif".equals(theme)) {
+			laf = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+		}
+		else if (!"metal".equals(theme)) {
+			System.setProperty("swing.gtkthemefile",	 theme);
+			laf = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+		}
 		try {
-			 if ("metal".equals(theme)) {
-				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-			}
-			else	 if ("system".equals(theme)) {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			}
-			else if ("motif".equals(theme)) {
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-			}
-			else {
-				System.setProperty("swing.gtkthemefile",	 theme);
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-			}
+			UIManager.setLookAndFeel(laf);
 		}
 		catch(Exception e) {
 			getLogger().warning(e.getMessage());
