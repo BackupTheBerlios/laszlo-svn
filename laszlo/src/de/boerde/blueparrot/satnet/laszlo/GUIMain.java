@@ -69,7 +69,7 @@ public class GUIMain {
 			String logWarning = null;
 			if (!"".equals(logFile)) {
 				try {
-					logHandler = new FileHandler(logFile);
+					logHandler = new FileHandler(logFile, 1024*1024*8, 8, true);
 				} catch (Exception e) {
 					logWarning = e.getMessage();
 				}
@@ -80,8 +80,7 @@ public class GUIMain {
 				logger.addHandler(logHandler);
 			}
 			if (logWarning != null) {
-				getLogger().severe(
-						"Cannot open log file, fall back to console: "
+				getLogger().severe("Cannot open log file, fall back to console: "
 								+ logWarning);
 			}
 		}
