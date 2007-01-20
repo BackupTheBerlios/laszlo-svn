@@ -15,7 +15,7 @@ Requires:
 - DVB card and software
 - Reception of a suitable service, e.g. Casablanca/Sat@Once
 - Plenty of disk space, e.g. 20 GB
-- J2SE 1.4.2 - http://java.sun.com/
+- J2SE 1.4.2 or better - http://java.sun.com/
 - A tool to extract .cab files:
   * http://www.microsoft.com/windows2000/techinfo/reskit/tools/existing/extract-o.asp
   * http://www.kyz.uklinux.net/cabextract.php
@@ -34,12 +34,12 @@ DVB Setup on Linux:
   the kernel or set up for being automatically loaded.
 - You also need to have the DVB driver utilities available.
 - Have a channels.conf describing a suitable service in $HOME/.szap, e.g.:
-  Casablanca:12603:h:0:22000:0:0:7255
+  Casablanca:11837:h:0:29900:::
 - Tune in the service by calling szap, and keep it running (important), e.g.:
   > szap Casablanca
 - Use the dvbnet utility to make the service's PID appear as a network
   interface, e.g.:
-  > dvbnet -p 0x300
+  > dvbnet -p 1304
   This should create an additional network interface (check with ifconfig -a),
   most usually called dvb0_0
 - Assign an IP address to the new network interface:
@@ -48,6 +48,9 @@ DVB Setup on Linux:
   > echo 0 >/proc/sys/net/ipv4/conf/dvb0_0/rp_filter
   in case the service sends its data from a subnet to which the IP address that
   you chose does not belong.
+- Optional: If you plan to run Laszlo and the DVB receiver on different
+  machines, you may use smcroute to add multicast routes for the Casablanca to
+  your local network.
 
 
 Build Laszlo:
@@ -137,15 +140,16 @@ Themes:
 The default is "metal", which stands for the the Java look and feel.
 Other possible values are "motif", which specifies the CDE/Motif look and feel,
 and "system", which specifies the look and feel for the current platform.
-To get the GTK+ look and feel, set the value to the path to the particular themes
-gtkrc file.
+To get the GTK+ look and feel, set the value to the path to the particular
+themes gtkrc file.
 
 
 What's already working:
 - Basic reception, extraction and categorizazion
 - Browsing through downloaded Web Contents with a browser
 - Reading newsgroups with an NTTP Newsreader
-- A basic index menu
+- A basic index menu - note that Laslo finds new webcasters, too, which has
+  been verified as the Deutsche Welle webcast was started
 - Replacing transmissions with newer transmission packages
 - Expiry of incomplete transmissions, outdated and damanged packages
 - Access from other machines in the network (can be disabled by setting bind
@@ -155,7 +159,7 @@ What's already working:
 - Advertising banners in the index menu (hey - I don't get any money out of
   that, but after having been in short contact with CSP, it's those ads that
   fund the transmission services, and so let's better have them displayed in
-  alternative reception tools, too, to help that those satellite serives can
+  alternative reception tools, too, to help that those satellite services can
   financially survive)
 
 
@@ -180,25 +184,27 @@ What's not yet implemented:
   turn out difficult, or even not feasible.)
 - Integrated readers for Web / News, possibly Mailinglists (will probably only
   ever be implemented if there should be no other open items at all)
+- Descriptor_Sat@Once.rar still an enigma
 
 
 Testing is needed on:
-- Specific Web data and their content-types; checking whether content types are
-  usually guessed correctly, or whether changes need to be made
+- Specific Web data and their content-types; checking whether content types
+  are usually guessed correctly, or whether changes need to be made.
 - Receiving new News transmissions, checking whether the overlap is always
   calculated correctly so that message numbers of old messages that are still
   in the new transmission, do not change (and so that readers won't display
-  those messages as new)
+  those messages as new).
 - Some strange incidents on which leading or trailing parts of a transmission
   seem to be sent to the wrong port. Does not seem to be a bug in the reception
-  code itself, so it might be either a detail of the transmission protocol which
-  has not yet been analyzed correctly, or this might be a limitation of the DVB
-  bandwidth or driver. Interestingly when the Receiver's MulticastPool is
-  enabled on Linux, this type of errors occurs extremely often. On Linux without
-  MulticastPool or on Windows regardless of the MulticastPool usage, these
-  errors are quite moderate. But does that imply a driver issue...?
+  code itself, so it might be either a detail of the transmission protocol
+  which has not yet been analyzed correctly, or this might be a limitation of
+  the DVB bandwidth or driver. Interestingly when the Receiver's MulticastPool
+  is enabled on Linux, this type of errors occurs extremely often. On Linux
+  without MulticastPool or on Windows regardless of the MulticastPool usage,
+  these errors are quite moderate. But does that imply a driver issue...?
+- Network connections to the outside world - at the moment, I'm still running a
+  dedicated proxy server upstream of Laszlo, e.g. tinyproxy.
 - ...and of course testing on a whole load of different environments.
-
 
 
 Protocol analysis:
