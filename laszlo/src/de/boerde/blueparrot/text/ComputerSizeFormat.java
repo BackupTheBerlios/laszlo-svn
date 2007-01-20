@@ -132,5 +132,5 @@ public class ComputerSizeFormat extends Format
 	private static DecimalFormat decimalFormat1 = new DecimalFormat ("###########0.0");
 	private static DecimalFormat decimalFormat2 = new DecimalFormat ("###########0.00");
 	private static DecimalFormat decimalFormat3 = new DecimalFormat ("###########0.000");
-	private static String[] marks = { "", "KiB", "MiB", "GiB" };
+	private static String[] marks = { "", "kB", "MB", "GB" };
 }
